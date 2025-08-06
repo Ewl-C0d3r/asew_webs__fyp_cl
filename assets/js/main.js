@@ -508,8 +508,8 @@ function convertToLazyLoading() {
 
 // Optimizar eventos de scroll
 window.addEventListener('scroll', throttle(handleHeaderScroll, 100));
-// =
-==== LOGO ANIMADO =====
+
+// ===== LOGO ANIMADO CORREGIDO =====
 function initializeAnimatedLogo() {
     if (!heroLogo || !navLogo) {
         console.warn('Elementos del logo animado no encontrados');
@@ -693,8 +693,8 @@ function debugLogoAnimation() {
 if (typeof window !== 'undefined') {
     window.resetAnimatedLogo = resetAnimatedLogo;
     window.debugLogoAnimation = debugLogoAnimation;
-}// =
-==== LOGO ANIMADO CORREGIDO =====
+}
+// ===== LOGO ANIMADO CORREGIDO =====
 function initializeAnimatedLogo() {
     if (!heroLogo || !navLogo) {
         console.warn('Elementos del logo animado no encontrados');
@@ -910,8 +910,8 @@ function debugLogoAnimation() {
 if (typeof window !== 'undefined') {
     window.resetAnimatedLogo = resetAnimatedLogo;
     window.debugLogoAnimation = debugLogoAnimation;
-}/
-/ ===== LOGO ANIMADO COMPLETAMENTE CORREGIDO =====
+}
+// ===== LOGO ANIMADO COMPLETAMENTE CORREGIDO =====
 function initializeAnimatedLogo() {
     console.log('🎭 Inicializando logo animado...');
     
@@ -1359,4 +1359,182 @@ if (typeof window !== 'undefined') {
     window.loadDynamicContent = loadDynamicContent;
     window.loadAreasContent = loadAreasContent;
     window.loadServiciosContent = loadServiciosContent;
+} 
+// ===== SISTEMA DE BOTONES CTA MEJORADO =====
+let currentSelectedMessage = '';
+
+// Función para manejar clicks en botones CTA
+function handleCTAClick(event, message, sectionName) {
+    event.preventDefault();
+    
+    // Guardar el mensaje seleccionado
+    currentSelectedMessage = message;
+    
+    // Actualizar textarea del formulario
+    updateContactForm(message);
+    
+    // Actualizar enlace de WhatsApp
+    updateWhatsAppLink(message);
+    
+    // Navegar a la sección de contacto
+    navigateToContact();
+    
+    console.log(`📧 Mensaje seleccionado de ${sectionName}:`, message);
 }
+
+// Actualizar el textarea del formulario de contacto
+function updateContactForm(message) {
+    const messageTextarea = document.getElementById('mensaje');
+    if (messageTextarea) {
+        messageTextarea.value = message;
+        messageTextarea.focus();
+        
+        // Añadir efecto visual
+        messageTextarea.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+        setTimeout(() => {
+            messageTextarea.style.backgroundColor = '';
+        }, 2000);
+    }
+}
+
+// Actualizar el enlace de WhatsApp "Escríbanos ahora"
+function updateWhatsAppLink(message) {
+    const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+    
+    whatsappLinks.forEach(link => {
+        // Actualizar href con el nuevo mensaje
+        const baseUrl = 'https://wa.me/+56992448094?text=';
+        const encodedMessage = encodeURIComponent(message);
+        link.href = baseUrl + encodedMessage;
+        
+        // Si es el enlace "Escríbanos ahora", actualizar también el texto visible
+        if (link.textContent.includes('Escríbanos') || link.textContent.includes('WhatsApp')) {
+            const originalText = link.textContent;
+            link.textContent = `${originalText} - ${message.substring(0, 50)}...`;
+            
+            // Restaurar texto original después de 5 segundos
+            setTimeout(() => {
+                link.textContent = originalText;
+            }, 5000);
+        }
+    });
+}
+
+// Navegar suavemente a la sección de contacto
+function navigateToContact() {
+    const contactSection = document.getElementById('contacto');
+    if (contactSection) {
+        const headerHeight = document.querySelector('.header').offsetHeight || 80;
+        const targetPosition = contactSection.offsetTop - headerHeight;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+        
+        // Añadir efecto visual a la sección de contacto
+        contactSection.style.backgroundColor = 'rgba(212, 175, 55, 0.05)';
+        setTimeout(() => {
+            contactSection.style.backgroundColor = '';
+        }, 3000);
+    }
+}
+
+// Función para generar mensajes personalizados
+function generatePersonalizedMessage(type, title) {
+    const messages = {
+        area: `Hola, me interesa recibir asesoría en el área de ${title}. Me gustaría conocer más detalles sobre sus servicios y agendar una consulta.`,
+        servicio: `Hola, necesito información sobre el servicio de ${title}. Me gustaría recibir asesoría personalizada y conocer los costos asociados.`,
+        estudio: `Hola, me interesa conocer más sobre Fierro y Pérez Abogados. Me gustaría recibir información sobre sus servicios y agendar una consulta inicial.`
+    };
+    
+    return messages[type] || messages.estudio;
+}
+
+// Actualizar función createAreaElement para usar el nuevo sistema
+function createAreaElement(area, index) {
+    const div = document.createElement('div');
+    div.className = 'area-card animate-on-scroll';
+    div.style.animationDelay = `${index * 0.2}s`;
+    
+    const personalizedMessage = generatePersonalizedMessage('area', area.titulo);
+    
+    div.innerHTML = `
+        <div class="area-icon">
+            ${area.icono}
+        </div>
+        <h3 class="area-title">${area.titulo}</h3>
+        <p class="area-description">${area.descripcion}</p>
+        <ul class="area-services">
+            ${area.servicios.map(servicio => `<li>${servicio}</li>`).join('')}
+        </ul>
+        <button class="area-cta" onclick="handleCTAClick(event, '${personalizedMessage.replace(/'/g, "\\'")}', '${area.titulo}')">
+            Consultar sobre ${area.titulo}
+        </button>
+    `;
+    
+    return div;
+}
+
+// Actualizar función createServicioElement para usar el nuevo sistema
+function createServicioElement(servicio, index) {
+    const div = document.createElement('div');
+    div.className = 'servicio-card animate-on-scroll';
+    div.style.animationDelay = `${index * 0.2}s`;
+    
+    const personalizedMessage = generatePersonalizedMessage('servicio', servicio.titulo);
+    
+    div.innerHTML = `
+        <div class="servicio-icon">
+            ${servicio.icono}
+        </div>
+        <h3 class="servicio-title">${servicio.titulo}</h3>
+        <p class="servicio-description">${servicio.descripcion}</p>
+        <ul class="servicio-detalles">
+            ${servicio.detalles.map(detalle => `<li>${detalle}</li>`).join('')}
+        </ul>
+        <button class="servicio-cta" onclick="handleCTAClick(event, '${personalizedMessage.replace(/'/g, "\\'")}', '${servicio.titulo}')">
+            Solicitar ${servicio.titulo}
+        </button>
+    `;
+    
+    return div;
+}
+
+// Función para agregar botón CTA al estudio
+function addEstudioCTA() {
+    const estudioSection = document.querySelector('.estudio');
+    const ctaButton = estudioSection?.querySelector('.cta-button');
+    
+    if (ctaButton) {
+        const personalizedMessage = generatePersonalizedMessage('estudio', 'Fierro y Pérez Abogados');
+        
+        ctaButton.onclick = function(event) {
+            handleCTAClick(event, personalizedMessage, 'El Estudio');
+        };
+        
+        // Remover href para evitar navegación directa a WhatsApp
+        ctaButton.removeAttribute('href');
+        ctaButton.style.cursor = 'pointer';
+    }
+}
+
+// Inicializar el sistema de CTAs mejorado
+function initializeCTASystem() {
+    console.log('🔗 Inicializando sistema de CTAs mejorado...');
+    
+    // Agregar CTA al estudio
+    setTimeout(() => {
+        addEstudioCTA();
+    }, 1000);
+    
+    console.log('✅ Sistema de CTAs inicializado');
+}
+
+// Agregar inicialización del sistema CTA
+document.addEventListener('DOMContentLoaded', function() {
+    // ... código existente ...
+    setTimeout(() => {
+        initializeCTASystem();
+    }, 1500);
+});

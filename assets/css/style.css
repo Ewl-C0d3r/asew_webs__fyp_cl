@@ -1075,19 +1075,9 @@ img[data-src] {
     z-index: 5;
 }
 
-/* Animaciones adicionales */
-@keyframes logoFloat {
-    0%, 100% {
-        transform: translateX(-50%) translateY(0);
-    }
-    50% {
-        transform: translateX(-50%) translateY(-10px);
-    }
-}
+/* Animaciones adicionales - logoFloat ELIMINADA */
 
-.hero-logo:not(.transitioning):not(.in-navbar) .hero-logo-img {
-    animation: logoFloat 3s ease-in-out infinite;
-}
+/* Animación flotante ELIMINADA para mejor posicionamiento */
 
 /* Responsive para el logo animado */
 @media (max-width: 768px) {
@@ -1251,7 +1241,7 @@ img[data-src] {
 }
 
 .hero-logo-img {
-    width: 180px;
+    width: 240px;
     height: auto;
     /* FORMA CUADRADA - SIN border-radius */
     border-radius: 0 !important;
@@ -1312,7 +1302,7 @@ img[data-src] {
     }
     
     .hero-logo-img {
-        width: 140px;
+        width: 240px;
     }
     
     .hero-content {
@@ -1355,4 +1345,154 @@ img[data-src] {
 .hero-logo-img,
 .nav-logo .logo {
     border-radius: 0 !important;
+}/* 
+===== SECCIÓN EL ESTUDIO - PILARES ===== */
+.pilares {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.pilar {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    /* Aplicar estilo hover permanentemente */
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.pilar h3 {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.pilar p {
+    color: var(--color-primary);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Hover con inversión de colores */
+.pilar:hover {
+    background: var(--color-primary);
+    color: var(--color-secondary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pilar:hover h3 {
+    color: var(--color-secondary);
+}
+
+.pilar:hover p {
+    color: var(--color-secondary);
+}
+
+/* Responsive para pilares */
+@media (max-width: 768px) {
+    .pilares {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* ===== ÁREAS DE PRÁCTICA - 2 POR FILA ===== */
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+/* Responsive para áreas */
+@media (max-width: 768px) {
+    .areas-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+/* ===== SERVICIOS - 2 POR FILA Y BOTONES CENTRADOS ===== */
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.servicio-cta {
+    display: block;
+    text-align: center;
+    margin: 20px auto 0;
+    width: fit-content;
+}
+
+/* Responsive para servicios */
+@media (max-width: 768px) {
+    .servicios-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}/* ===== ES
+TILOS PARA BOTONES CTA MEJORADOS ===== */
+.area-cta,
+.servicio-cta {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.area-cta::before,
+.servicio-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.area-cta:hover,
+.servicio-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.area-cta:hover::before,
+.servicio-cta:hover::before {
+    left: 100%;
+}
+
+.area-cta:active,
+.servicio-cta:active {
+    transform: translateY(0);
+}
+
+/* Centrar botones de servicios */
+.servicio-cta {
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+    width: fit-content;
 }

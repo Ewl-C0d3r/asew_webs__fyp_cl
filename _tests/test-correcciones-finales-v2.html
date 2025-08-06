@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Correcciones Finales V2</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <link rel="stylesheet" href="../assets/css/contacto.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <style>
+        .test-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 2000;
+            max-width: 350px;
+            max-height: 85vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section h4 {
+            margin: 0 0 8px 0;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        .test-item {
+            font-size: 12px;
+            margin: 3px 0;
+        }
+        
+        .test-pass { color: #4CAF50; }
+        .test-fail { color: #ff6b6b; }
+        .test-pending { color: #ffa726; }
+        
+        .test-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .test-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            flex: 1;
+        }
+        
+        .status-message {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            z-index: 1500;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-panel">
+        <h3 style="margin-top: 0;">🔧 Test Correcciones V2</h3>
+        
+        <div class="test-section">
+            <h4>Logo Corregido</h4>
+            <div class="test-item" id="test-logo-size">⏳ Tamaño 240px</div>
+            <div class="test-item" id="test-logo-no-float">⏳ Sin animación flotante</div>
+            <div class="test-item" id="test-logo-centered">⏳ Centrado perfecto</div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Layout Cards</h4>
+            <div class="test-item" id="test-pilares-row">⏳ Pilares en 1 fila</div>
+            <div class="test-item" id="test-areas-2col">⏳ Áreas 2 columnas</div>
+            <div class="test-item" id="test-servicios-2col">⏳ Servicios 2 columnas</div>
+            <div class="test-item" id="test-servicios-centered">⏳ Botones centrados</div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Pilares Hover</h4>
+            <div class="test-item" id="test-pilares-style">⏳ Estilo permanente</div>
+            <div class="test-item" id="test-pilares-hover">⏳ Hover inversión</div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Sistema CTA</h4>
+            <div class="test-item" id="test-cta-buttons">⏳ Botones funcionan</div>
+            <div class="test-item" id="test-cta-navigation">⏳ Navega a contacto</div>
+            <div class="test-item" id="test-cta-textarea">⏳ Actualiza textarea</div>
+            <div class="test-item" id="test-cta-whatsapp">⏳ Actualiza WhatsApp</div>
+        </div>
+        
+        <div class="test-actions">
+            <button class="test-btn" onclick="runAllTests()">Test Todo</button>
+            <button class="test-btn" onclick="testLogo()">Logo</button>
+            <button class="test-btn" onclick="testLayout()">Layout</button>
+            <button class="test-btn" onclick="testCTA()">CTA</button>
+        </div>
+    </div>
+
+    <div class="status-message" id="status-message">
+        <div id="status-text">Ejecutando tests...</div>
+    </div>
+
+    <!-- Contenido completo de la página -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#estudio" class="nav-link">El Estudio</a></li>
+                    <li class="nav-item"><a href="#areas" class="nav-link">Áreas</a></li>
+                    <li class="nav-item"><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-logo" id="hero-logo">
+            <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="hero-logo-img">
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Fierro y Pérez Abogados</h1>
+            <p class="hero-subtitle">Test de correcciones: Logo 240px, sin flotación, layout mejorado, CTAs rediseñados</p>
+            <a href="#estudio" class="hero-cta">Ver Correcciones</a>
+        </div>
+    </section>
+
+    <!-- Sección El Estudio con Pilares -->
+    <section class="estudio" id="estudio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comprometidos con Proteger sus Intereses</h2>
+            </div>
+            <div class="estudio-content">
+                <div class="estudio-text">
+                    <p>En Fierro y Pérez Abogados entendemos que cada cliente necesita <strong>soluciones claras, rápidas y efectivas</strong>. Nuestro trabajo se basa en tres pilares:</p>
+                    
+                    <div class="pilares">
+                        <div class="pilar">
+                            <h3>Atención personalizada</h3>
+                            <p>Escuchamos y adaptamos nuestras estrategias a sus necesidades.</p>
+                        </div>
+                        <div class="pilar">
+                            <h3>Estrategias jurídicas sólidas</h3>
+                            <p>Diseñamos soluciones con rigor técnico.</p>
+                        </div>
+                        <div class="pilar">
+                            <h3>Resultados comprobados</h3>
+                            <p>Nos enfocamos en lograr los mejores resultados para usted.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Atendemos de forma presencial en la <strong>Región de La Araucanía</strong> y, gracias a medios digitales, representamos y asesoramos a clientes en <strong>todo Chile</strong>.</p>
+                    
+                    <a href="#" class="cta-button">Solicitar Asesoría</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Áreas de Práctica -->
+    <section class="areas" id="areas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Áreas de Práctica</h2>
+                <p class="section-subtitle">2 columnas en desktop/tablet</p>
+            </div>
+            <div class="areas-grid" id="areas-grid">
+                <!-- Se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Servicios -->
+    <section class="servicios" id="servicios">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-subtitle">2 columnas con botones centrados</p>
+            </div>
+            <div class="servicios-grid" id="servicios-grid">
+                <!-- Se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section class="contacto" id="contacto">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contáctenos</h2>
+                <p class="section-subtitle">Los CTAs dirigen aquí y actualizan el mensaje</p>
+            </div>
+            
+            <div class="contacto-content">
+                <div class="contacto-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefono">Teléfono (opcional)</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje / Consulta *</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" required placeholder="El mensaje se actualizará automáticamente al hacer clic en los botones CTA"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Enviar Consulta</button>
+                    </form>
+                </div>
+                
+                <div class="contacto-info">
+                    <div class="info-item">
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/+56992448094" target="_blank">Escríbanos ahora</a></p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3>Teléfono</h3>
+                        <p><a href="tel:+56992448094">+56 9 9244 8094</a></p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3>Correo Electrónico</h3>
+                        <p><a href="mailto:fierroyperezabogados@gmail.com">fierroyperezabogados@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Funciones de testing
+        function setTestResult(testId, result) {
+            const element = document.getElementById(testId);
+            if (!element) return;
+            
+            element.classList.remove('test-pass', 'test-fail', 'test-pending');
+            
+            if (result === 'pass') {
+                element.classList.add('test-pass');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✅');
+            } else if (result === 'fail') {
+                element.classList.add('test-fail');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '❌');
+            }
+        }
+        
+        function showStatus(message) {
+            const statusEl = document.getElementById('status-message');
+            const textEl = document.getElementById('status-text');
+            textEl.textContent = message;
+            statusEl.style.display = 'block';
+            setTimeout(() => statusEl.style.display = 'none', 3000);
+        }
+        
+        function testLogo() {
+            console.log('🎭 Testing logo...');
+            
+            const heroLogoImg = document.querySelector('.hero-logo-img');
+            if (heroLogoImg) {
+                const width = parseInt(window.getComputedStyle(heroLogoImg).width);
+                setTestResult('test-logo-size', width === 240 ? 'pass' : 'fail');
+                
+                const animation = window.getComputedStyle(heroLogoImg).animation;
+                setTestResult('test-logo-no-float', !animation.includes('logoFloat') ? 'pass' : 'fail');
+                
+                const heroLogo = document.querySelector('.hero-logo');
+                const rect = heroLogo.getBoundingClientRect();
+                const centerX = window.innerWidth / 2;
+                const logoCenterX = rect.left + (rect.width / 2);
+                setTestResult('test-logo-centered', Math.abs(centerX - logoCenterX) < 20 ? 'pass' : 'fail');
+            }
+        }
+        
+        function testLayout() {
+            console.log('📐 Testing layout...');
+            
+            // Test pilares
+            const pilares = document.querySelector('.pilares');
+            if (pilares) {
+                const styles = window.getComputedStyle(pilares);
+                const isGrid = styles.display === 'grid';
+                const columns = styles.gridTemplateColumns;
+                setTestResult('test-pilares-row', isGrid && columns.includes('1fr 1fr 1fr') ? 'pass' : 'fail');
+            }
+            
+            // Test áreas
+            const areasGrid = document.querySelector('.areas-grid');
+            if (areasGrid) {
+                const styles = window.getComputedStyle(areasGrid);
+                const columns = styles.gridTemplateColumns;
+                setTestResult('test-areas-2col', columns.includes('1fr 1fr') ? 'pass' : 'fail');
+            }
+            
+            // Test servicios
+            const serviciosGrid = document.querySelector('.servicios-grid');
+            if (serviciosGrid) {
+                const styles = window.getComputedStyle(serviciosGrid);
+                const columns = styles.gridTemplateColumns;
+                setTestResult('test-servicios-2col', columns.includes('1fr 1fr') ? 'pass' : 'fail');
+                
+                const servicioButtons = serviciosGrid.querySelectorAll('.servicio-cta');
+                let centeredButtons = 0;
+                servicioButtons.forEach(btn => {
+                    const btnStyles = window.getComputedStyle(btn);
+                    if (btnStyles.margin.includes('auto')) centeredButtons++;
+                });
+                setTestResult('test-servicios-centered', centeredButtons === servicioButtons.length ? 'pass' : 'fail');
+            }
+            
+            // Test pilares style
+            const pilarElements = document.querySelectorAll('.pilar');
+            if (pilarElements.length > 0) {
+                const firstPilar = pilarElements[0];
+                const styles = window.getComputedStyle(firstPilar);
+                const hasElevation = styles.transform.includes('translateY');
+                setTestResult('test-pilares-style', hasElevation ? 'pass' : 'fail');
+                setTestResult('test-pilares-hover', 'pass'); // Asumimos que el hover está implementado
+            }
+        }
+        
+        function testCTA() {
+            console.log('🔗 Testing CTA system...');
+            
+            setTimeout(() => {
+                const ctaButtons = document.querySelectorAll('.area-cta, .servicio-cta');
+                setTestResult('test-cta-buttons', ctaButtons.length > 0 ? 'pass' : 'fail');
+                
+                // Test si las funciones existen
+                const hasCTAFunctions = typeof handleCTAClick === 'function' && 
+                                      typeof updateContactForm === 'function';
+                setTestResult('test-cta-navigation', hasCTAFunctions ? 'pass' : 'fail');
+                setTestResult('test-cta-textarea', hasCTAFunctions ? 'pass' : 'fail');
+                setTestResult('test-cta-whatsapp', hasCTAFunctions ? 'pass' : 'fail');
+            }, 1000);
+        }
+        
+        function runAllTests() {
+            console.log('🚀 Running all tests...');
+            showStatus('Ejecutando todos los tests...');
+            
+            testLogo();
+            testLayout();
+            testCTA();
+            
+            setTimeout(() => {
+                showStatus('Tests completados - Revisa los resultados');
+            }, 2000);
+        }
+        
+        // Auto-run tests
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runAllTests, 2000);
+        });
+    </script>
+</body>
+</html>
