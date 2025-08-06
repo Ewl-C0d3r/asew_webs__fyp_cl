@@ -5,6 +5,14 @@
     padding: 80px 0;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     position: relative;
+    width: 100%;
+}
+
+.servicios .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
 }
 
 .servicios::before {
@@ -20,9 +28,12 @@
 /* ===== GRID DE SERVICIOS ===== */
 .servicios-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 50px;
+    width: 100%;
+    justify-items: stretch;
+    align-items: start;
 }
 
 /* ===== TARJETAS DE SERVICIOS ===== */
@@ -37,6 +48,10 @@
     border: 1px solid rgba(var(--color-secondary-rgb), 0.1);
     opacity: 1;
     visibility: visible;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .servicio-card::before {
@@ -194,7 +209,37 @@
 
 /* ===== RESPONSIVE DESIGN ===== */
 
-/* Tablets */
+/* Wide screens - mantener 2 columnas */
+@media (min-width: 1400px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        max-width: 1400px;
+    }
+}
+
+/* Desktop - 2 columnas */
+@media (min-width: 992px) and (max-width: 1399px) {
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px;
+    }
+}
+
+/* Tablets - 2 columnas en horizontal, 1 en vertical */
+@media (min-width: 769px) and (max-width: 991px) {
+    .servicios {
+        padding: 60px 0;
+    }
+    
+    .servicios-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-top: 40px;
+    }
+}
+
+/* Tablets pequeñas y móviles - 1 columna */
 @media (max-width: 768px) {
     .servicios {
         padding: 60px 0;
@@ -205,6 +250,7 @@
         gap: 25px;
         margin-top: 40px;
     }
+}
     
     .servicio-card {
         padding: 25px;

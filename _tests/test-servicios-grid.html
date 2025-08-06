@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Grid de Servicios</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 2000;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .test-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section h4 {
+            margin: 0 0 8px 0;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        .test-item {
+            font-size: 12px;
+            margin: 3px 0;
+        }
+        
+        .test-pass { color: #4CAF50; }
+        .test-fail { color: #ff6b6b; }
+        .test-pending { color: #ffa726; }
+        
+        .test-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .test-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            flex: 1;
+        }
+        
+        .viewport-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1500;
+        }
+        
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+            border: 2px dashed #d4af37;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .grid-overlay.show {
+            opacity: 0.5;
+        }
+        
+        .grid-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(212, 175, 55, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h3 style="margin-top: 0;">📐 Test Grid Servicios</h3>
+        
+        <div class="test-section">
+            <h4>Distribución</h4>
+            <div class="test-item" id="test-grid-columns">⏳ 2 columnas</div>
+            <div class="test-item" id="test-cards-count">⏳ 4 servicios</div>
+            <div class="test-item" id="test-cards-per-row">⏳ 2 por fila</div>
+            <div class="test-item" id="test-equal-height">⏳ Altura uniforme</div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Responsive</h4>
+            <div class="test-item" id="test-desktop">⏳ Desktop (>992px)</div>
+            <div class="test-item" id="test-tablet">⏳ Tablet (769-991px)</div>
+            <div class="test-item" id="test-mobile">⏳ Móvil (<768px)</div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Viewport Actual</h4>
+            <div class="test-item" id="current-viewport">⏳ Detectando...</div>
+            <div class="test-item" id="current-columns">⏳ Columnas actuales</div>
+        </div>
+        
+        <div class="test-actions">
+            <button class="test-btn" onclick="runTests()">Test</button>
+            <button class="test-btn" onclick="toggleOverlay()">Overlay</button>
+            <button class="test-btn" onclick="simulateResize()">Resize</button>
+        </div>
+    </div>
+
+    <div class="viewport-info" id="viewport-info">
+        Viewport: <span id="viewport-size">0x0</span> | 
+        Tipo: <span id="viewport-type">-</span>
+    </div>
+
+    <div style="padding: 20px;">
+        <h1>Test de Distribución de Servicios</h1>
+        <p>Verificando que los servicios se muestren en 2 columnas para desktop y wide screen</p>
+        
+        <!-- Sección Servicios -->
+        <section class="servicios" id="servicios">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestros Servicios</h2>
+                    <p class="section-subtitle">Debe mostrar 2 servicios por fila en desktop y wide screen</p>
+                </div>
+                <div class="servicios-grid" id="servicios-grid" style="position: relative;">
+                    <div class="grid-overlay" id="grid-overlay">
+                        <div class="grid-info">Grid Overlay</div>
+                    </div>
+                    <!-- Los servicios se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let overlayVisible = false;
+        
+        // Funciones de testing
+        function setTestResult(testId, result) {
+            const element = document.getElementById(testId);
+            if (!element) return;
+            
+            element.classList.remove('test-pass', 'test-fail', 'test-pending');
+            
+            if (result === 'pass') {
+                element.classList.add('test-pass');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✅]/, '✅');
+            } else if (result === 'fail') {
+                element.classList.add('test-fail');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✅]/, '❌');
+            }
+        }
+        
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            document.getElementById('viewport-size').textContent = `${width}x${height}`;
+            
+            let type = '';
+            if (width >= 1400) {
+                type = 'Wide Screen';
+            } else if (width >= 992) {
+                type = 'Desktop';
+            } else if (width >= 769) {
+                type = 'Tablet H';
+            } else if (width >= 481) {
+                type = 'Tablet V';
+            } else {
+                type = 'Móvil';
+            }
+            
+            document.getElementById('viewport-type').textContent = type;
+            document.getElementById('current-viewport').innerHTML = `⏳ ${width}px (${type})`;
+        }
+        
+        function analyzeGrid() {
+            const grid = document.getElementById('servicios-grid');
+            if (!grid) return;
+            
+            const styles = window.getComputedStyle(grid);
+            const columns = styles.gridTemplateColumns;
+            const cards = grid.querySelectorAll('.servicio-card');
+            
+            // Actualizar información de columnas actuales
+            const columnCount = columns.split(' ').length;
+            document.getElementById('current-columns').innerHTML = `⏳ ${columnCount} columnas`;
+            
+            return {
+                columnCount,
+                cardCount: cards.length,
+                columns: columns
+            };
+        }
+        
+        function runTests() {
+            console.log('📐 Ejecutando tests de grid...');
+            
+            updateViewportInfo();
+            
+            setTimeout(() => {
+                const gridInfo = analyzeGrid();
+                const width = window.innerWidth;
+                
+                // Test columnas según viewport
+                let expectedColumns = 1;
+                if (width >= 769) {
+                    expectedColumns = 2;
+                }
+                
+                setTestResult('test-grid-columns', gridInfo.columnCount === expectedColumns ? 'pass' : 'fail');
+                setTestResult('test-cards-count', gridInfo.cardCount === 4 ? 'pass' : 'fail');
+                
+                // Test distribución por fila
+                if (width >= 769) {
+                    setTestResult('test-cards-per-row', gridInfo.columnCount === 2 ? 'pass' : 'fail');
+                } else {
+                    setTestResult('test-cards-per-row', gridInfo.columnCount === 1 ? 'pass' : 'fail');
+                }
+                
+                // Test altura uniforme
+                const cards = document.querySelectorAll('.servicio-card');
+                let uniformHeight = true;
+                if (cards.length > 1) {
+                    const firstHeight = cards[0].offsetHeight;
+                    for (let i = 1; i < cards.length; i++) {
+                        if (Math.abs(cards[i].offsetHeight - firstHeight) > 20) {
+                            uniformHeight = false;
+                            break;
+                        }
+                    }
+                }
+                setTestResult('test-equal-height', uniformHeight ? 'pass' : 'fail');
+                
+                // Test responsive
+                setTestResult('test-desktop', width >= 992 && gridInfo.columnCount === 2 ? 'pass' : 'fail');
+                setTestResult('test-tablet', (width >= 769 && width < 992) && gridInfo.columnCount === 2 ? 'pass' : 'fail');
+                setTestResult('test-mobile', width < 769 && gridInfo.columnCount === 1 ? 'pass' : 'fail');
+                
+                console.log('Grid info:', gridInfo);
+                console.log('Viewport:', width, 'px');
+            }, 1000);
+        }
+        
+        function toggleOverlay() {
+            const overlay = document.getElementById('grid-overlay');
+            overlayVisible = !overlayVisible;
+            overlay.classList.toggle('show', overlayVisible);
+        }
+        
+        function simulateResize() {
+            console.log('🔄 Simulando cambios de viewport...');
+            
+            const sizes = [
+                { width: 1920, name: 'Wide Screen' },
+                { width: 1200, name: 'Desktop' },
+                { width: 900, name: 'Tablet H' },
+                { width: 600, name: 'Tablet V' },
+                { width: 400, name: 'Móvil' }
+            ];
+            
+            let currentIndex = 0;
+            
+            function nextSize() {
+                if (currentIndex >= sizes.size) return;
+                
+                const size = sizes[currentIndex];
+                console.log(`📱 Simulando ${size.name}: ${size.width}px`);
+                
+                // Simular cambio de viewport (solo para logging)
+                updateViewportInfo();
+                runTests();
+                
+                currentIndex++;
+                if (currentIndex < sizes.length) {
+                    setTimeout(nextSize, 2000);
+                }
+            }
+            
+            nextSize();
+        }
+        
+        // Event listeners
+        window.addEventListener('resize', () => {
+            updateViewportInfo();
+            setTimeout(runTests, 100);
+        });
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📐 Test de grid de servicios iniciado');
+            
+            updateViewportInfo();
+            
+            // Ejecutar tests después de que se cargue el contenido
+            setTimeout(() => {
+                runTests();
+            }, 2000);
+            
+            // Actualizar viewport info cada segundo
+            setInterval(updateViewportInfo, 1000);
+        });
+    </script>
+</body>
+</html>
