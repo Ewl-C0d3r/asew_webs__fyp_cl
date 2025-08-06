@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Visibilidad Servicios</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <style>
+        .debug-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .debug-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .debug-section h4 {
+            margin: 0 0 8px 0;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        .debug-list {
+            margin: 0;
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        
+        .debug-list li {
+            margin: 3px 0;
+        }
+        
+        .pass {
+            color: #4CAF50;
+        }
+        
+        .fail {
+            color: #ff6b6b;
+        }
+        
+        .debug-actions {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .debug-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            flex: 1;
+        }
+        
+        .debug-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 11px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <h3 style="margin-top: 0;">🔍 Debug Servicios</h3>
+        
+        <div class="debug-section">
+            <h4>Variables CSS</h4>
+            <ul class="debug-list">
+                <li id="debug-primary">⏳ --color-primary</li>
+                <li id="debug-secondary">⏳ --color-secondary</li>
+                <li id="debug-secondary-rgb">⏳ --color-secondary-rgb</li>
+                <li id="debug-text">⏳ --color-text</li>
+            </ul>
+        </div>
+        
+        <div class="debug-section">
+            <h4>JavaScript</h4>
+            <ul class="debug-list">
+                <li id="debug-js-loaded">⏳ main.js cargado</li>
+                <li id="debug-function">⏳ loadServiciosContent()</li>
+                <li id="debug-grid">⏳ servicios-grid encontrado</li>
+            </ul>
+        </div>
+        
+        <div class="debug-section">
+            <h4>Contenido</h4>
+            <ul class="debug-list">
+                <li id="debug-cards-created">⏳ Tarjetas creadas</li>
+                <li id="debug-cards-visible">⏳ Tarjetas visibles</li>
+                <li id="debug-css-applied">⏳ CSS aplicado</li>
+            </ul>
+        </div>
+        
+        <div class="debug-actions">
+            <button class="debug-btn" onclick="runDebug()">Debug</button>
+            <button class="debug-btn" onclick="forceLoad()">Forzar Carga</button>
+            <button class="debug-btn" onclick="checkCSS()">Check CSS</button>
+        </div>
+        
+        <div class="debug-info" id="debug-log">
+            Iniciando debug...
+        </div>
+    </div>
+
+    <div style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+        <h1>Test de Visibilidad de Servicios</h1>
+        
+        <!-- Sección Servicios -->
+        <section class="servicios" id="servicios">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestros Servicios</h2>
+                    <p class="section-subtitle">Soluciones legales adaptadas a las necesidades específicas de cada cliente</p>
+                </div>
+                <div class="servicios-grid" id="servicios-grid">
+                    <!-- Los servicios se cargarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let debugLog = document.getElementById('debug-log');
+        
+        function addLog(message) {
+            debugLog.innerHTML += '<br>' + message;
+            debugLog.scrollTop = debugLog.scrollHeight;
+        }
+        
+        function setDebugResult(id, result) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            element.classList.remove('pass', 'fail');
+            
+            if (result === 'pass') {
+                element.classList.add('pass');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✓');
+            } else {
+                element.classList.add('fail');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✗');
+            }
+        }
+        
+        function runDebug() {
+            addLog('🔍 Iniciando debug completo...');
+            
+            // 1. Verificar variables CSS
+            checkCSSVariables();
+            
+            // 2. Verificar JavaScript
+            checkJavaScript();
+            
+            // 3. Verificar contenido
+            setTimeout(() => {
+                checkContent();
+            }, 1000);
+        }
+        
+        function checkCSSVariables() {
+            addLog('📝 Verificando variables CSS...');
+            
+            const rootStyles = getComputedStyle(document.documentElement);
+            
+            const primary = rootStyles.getPropertyValue('--color-primary').trim();
+            setDebugResult('debug-primary', primary ? 'pass' : 'fail');
+            addLog(`--color-primary: ${primary || 'NO DEFINIDA'}`);
+            
+            const secondary = rootStyles.getPropertyValue('--color-secondary').trim();
+            setDebugResult('debug-secondary', secondary ? 'pass' : 'fail');
+            addLog(`--color-secondary: ${secondary || 'NO DEFINIDA'}`);
+            
+            const secondaryRgb = rootStyles.getPropertyValue('--color-secondary-rgb').trim();
+            setDebugResult('debug-secondary-rgb', secondaryRgb ? 'pass' : 'fail');
+            addLog(`--color-secondary-rgb: ${secondaryRgb || 'NO DEFINIDA'}`);
+            
+            const text = rootStyles.getPropertyValue('--color-text').trim();
+            setDebugResult('debug-text', text ? 'pass' : 'fail');
+            addLog(`--color-text: ${text || 'NO DEFINIDA'}`);
+        }
+        
+        function checkJavaScript() {
+            addLog('🔧 Verificando JavaScript...');
+            
+            // Verificar si main.js se cargó
+            const jsLoaded = typeof loadServiciosContent === 'function';
+            setDebugResult('debug-js-loaded', jsLoaded ? 'pass' : 'fail');
+            addLog(`main.js cargado: ${jsLoaded ? 'SÍ' : 'NO'}`);
+            
+            // Verificar función específica
+            setDebugResult('debug-function', jsLoaded ? 'pass' : 'fail');
+            addLog(`loadServiciosContent(): ${jsLoaded ? 'EXISTE' : 'NO EXISTE'}`);
+            
+            // Verificar grid
+            const grid = document.getElementById('servicios-grid');
+            setDebugResult('debug-grid', grid ? 'pass' : 'fail');
+            addLog(`servicios-grid: ${grid ? 'ENCONTRADO' : 'NO ENCONTRADO'}`);
+        }
+        
+        function checkContent() {
+            addLog('📦 Verificando contenido...');
+            
+            const cards = document.querySelectorAll('.servicio-card');
+            setDebugResult('debug-cards-created', cards.length > 0 ? 'pass' : 'fail');
+            addLog(`Tarjetas creadas: ${cards.length}`);
+            
+            if (cards.length > 0) {
+                let visibleCards = 0;
+                cards.forEach((card, index) => {
+                    const style = window.getComputedStyle(card);
+                    const isVisible = style.opacity !== '0' && 
+                                    style.visibility !== 'hidden' && 
+                                    style.display !== 'none';
+                    
+                    if (isVisible) visibleCards++;
+                    
+                    addLog(`Tarjeta ${index + 1}: opacity=${style.opacity}, visibility=${style.visibility}, display=${style.display}`);
+                });
+                
+                setDebugResult('debug-cards-visible', visibleCards > 0 ? 'pass' : 'fail');
+                addLog(`Tarjetas visibles: ${visibleCards}/${cards.length}`);
+                
+                // Verificar CSS aplicado
+                const firstCard = cards[0];
+                const cardStyle = window.getComputedStyle(firstCard);
+                const hasBackground = cardStyle.backgroundColor !== 'rgba(0, 0, 0, 0)';
+                setDebugResult('debug-css-applied', hasBackground ? 'pass' : 'fail');
+                addLog(`CSS aplicado: ${hasBackground ? 'SÍ' : 'NO'}`);
+            } else {
+                setDebugResult('debug-cards-visible', 'fail');
+                setDebugResult('debug-css-applied', 'fail');
+                addLog('No hay tarjetas para verificar');
+            }
+        }
+        
+        function forceLoad() {
+            addLog('🚀 Forzando carga de servicios...');
+            
+            if (typeof loadServiciosContent === 'function') {
+                // Limpiar grid primero
+                const grid = document.getElementById('servicios-grid');
+                if (grid) {
+                    grid.innerHTML = '';
+                    addLog('Grid limpiado');
+                }
+                
+                // Cargar servicios
+                loadServiciosContent();
+                addLog('loadServiciosContent() ejecutado');
+                
+                // Verificar después de un delay
+                setTimeout(() => {
+                    checkContent();
+                }, 500);
+            } else {
+                addLog('❌ Función loadServiciosContent no disponible');
+            }
+        }
+        
+        function checkCSS() {
+            addLog('🎨 Verificando estilos CSS...');
+            
+            const serviciosSection = document.querySelector('.servicios');
+            if (serviciosSection) {
+                const sectionStyle = window.getComputedStyle(serviciosSection);
+                addLog(`Sección .servicios: display=${sectionStyle.display}, visibility=${sectionStyle.visibility}`);
+            }
+            
+            const grid = document.getElementById('servicios-grid');
+            if (grid) {
+                const gridStyle = window.getComputedStyle(grid);
+                addLog(`Grid: display=${gridStyle.display}, grid-template-columns=${gridStyle.gridTemplateColumns}`);
+            }
+            
+            // Verificar si los estilos de servicios.css se cargaron
+            const testElement = document.createElement('div');
+            testElement.className = 'servicio-card';
+            testElement.style.position = 'absolute';
+            testElement.style.left = '-9999px';
+            document.body.appendChild(testElement);
+            
+            const testStyle = window.getComputedStyle(testElement);
+            const cssLoaded = testStyle.backgroundColor !== 'rgba(0, 0, 0, 0)';
+            addLog(`servicios.css cargado: ${cssLoaded ? 'SÍ' : 'NO'}`);
+            
+            document.body.removeChild(testElement);
+        }
+        
+        // Ejecutar debug automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('DOM cargado');
+            setTimeout(() => {
+                runDebug();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

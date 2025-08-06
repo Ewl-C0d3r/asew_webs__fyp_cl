@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Header y Navegación</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <style>
+        body {
+            margin: 0;
+            padding-top: 100px; /* Espacio para el header fijo */
+        }
+        .test-section {
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .test-section:nth-child(odd) {
+            background: var(--color-light-gray);
+        }
+        .test-section:nth-child(even) {
+            background: var(--color-white);
+        }
+        .test-content {
+            max-width: 800px;
+        }
+        .test-info {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+        }
+        .feature-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .feature-list li {
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--color-secondary);
+            border-radius: var(--radius-sm);
+        }
+        .responsive-indicator {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 10px 15px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            z-index: 998;
+            box-shadow: var(--shadow-md);
+        }
+        .scroll-indicator {
+            position: fixed;
+            top: 90px;
+            left: 20px;
+            background: var(--color-accent);
+            color: var(--color-white);
+            padding: 10px 15px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            z-index: 998;
+            box-shadow: var(--shadow-md);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header de prueba (copiado del index.html) -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                
+                <!-- Menú de navegación -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="#inicio" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#estudio" class="nav-link">El Estudio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#areas" class="nav-link">Áreas de Práctica</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#servicios" class="nav-link">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contacto" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                
+                <!-- Botón hamburguesa para móviles -->
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Indicadores de prueba -->
+    <div class="responsive-indicator" id="responsive-indicator">Desktop</div>
+    <div class="scroll-indicator" id="scroll-indicator">Scroll: 0px</div>
+
+    <!-- Secciones de prueba -->
+    <section class="test-section" id="inicio">
+        <div class="test-content">
+            <h1>Test: Header y Navegación</h1>
+            <div class="test-info">
+                <h3>Funcionalidades a Probar:</h3>
+                <ul class="feature-list">
+                    <li><strong>Logo fijo de 100px:</strong> El logo mantiene su tamaño en todas las resoluciones</li>
+                    <li><strong>Header fijo:</strong> El header permanece visible al hacer scroll</li>
+                    <li><strong>Efecto scroll:</strong> El header cambia de apariencia al hacer scroll</li>
+                    <li><strong>Navegación suave:</strong> Los enlaces navegan suavemente entre secciones</li>
+                    <li><strong>Menú hamburguesa:</strong> En móviles se muestra el menú hamburguesa</li>
+                    <li><strong>Responsive:</strong> El diseño se adapta a diferentes tamaños de pantalla</li>
+                    <li><strong>Hover effects:</strong> Los enlaces tienen efectos de hover</li>
+                    <li><strong>Animaciones:</strong> Transiciones suaves en todos los elementos</li>
+                </ul>
+            </div>
+            <p><strong>Instrucciones:</strong> Haz scroll hacia abajo para probar el efecto del header. Redimensiona la ventana para probar la responsividad.</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="estudio">
+        <div class="test-content">
+            <h2>Sección: El Estudio</h2>
+            <p>Esta sección simula "El Estudio". Observa cómo el header se mantiene fijo y cambia su apariencia al hacer scroll.</p>
+            <div class="test-info">
+                <h4>Pruebas de Navegación:</h4>
+                <p>Haz clic en los enlaces del menú para navegar entre secciones. La navegación debe ser suave y el enlace activo debe destacarse.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section" id="areas">
+        <div class="test-content">
+            <h2>Sección: Áreas de Práctica</h2>
+            <p>Esta sección simula "Áreas de Práctica". Prueba el menú hamburguesa en dispositivos móviles.</p>
+            <div class="test-info">
+                <h4>Pruebas Móviles:</h4>
+                <p>Redimensiona la ventana a menos de 992px para ver el menú hamburguesa. El menú debe abrirse con una animación suave.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section" id="servicios">
+        <div class="test-content">
+            <h2>Sección: Servicios</h2>
+            <p>Esta sección simula "Servicios". Observa los efectos de hover en los enlaces del menú.</p>
+            <div class="test-info">
+                <h4>Efectos Visuales:</h4>
+                <p>Los enlaces del menú deben tener una línea dorada que aparece al hacer hover, y el color del texto debe cambiar.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="test-section" id="contacto">
+        <div class="test-content">
+            <h2>Sección: Contacto</h2>
+            <p>Esta sección simula "Contacto". El header debe mantener su funcionalidad en toda la página.</p>
+            <div class="test-info">
+                <h4>Verificación Final:</h4>
+                <p>Todas las funcionalidades del header deben funcionar correctamente: navegación, efectos de scroll, responsividad y animaciones.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Funcionalidades de prueba del header
+        let isMenuOpen = false;
+        let scrollTopButton;
+        let navToggle;
+        let navMenu;
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeElements();
+            initializeNavigation();
+            initializeTestIndicators();
+        });
+
+        function initializeElements() {
+            navToggle = document.getElementById('nav-toggle');
+            navMenu = document.getElementById('nav-menu');
+        }
+
+        function initializeNavigation() {
+            // Toggle del menú móvil
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Cerrar menú al hacer click en un enlace
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    closeMobileMenu();
+                    handleSmoothScroll.call(this, e);
+                });
+            });
+            
+            // Cambiar estilo del header al hacer scroll
+            window.addEventListener('scroll', handleHeaderScroll);
+        }
+
+        function toggleMobileMenu() {
+            isMenuOpen = !isMenuOpen;
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleSmoothScroll(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Actualizar enlace activo
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('current-section');
+                });
+                this.classList.add('current-section');
+            }
+        }
+
+        function handleHeaderScroll() {
+            const header = document.querySelector('.header');
+            const scrolled = window.scrollY > 100;
+            
+            if (header) {
+                header.classList.toggle('scrolled', scrolled);
+            }
+            
+            // Actualizar indicador de scroll
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.textContent = `Scroll: ${Math.round(window.scrollY)}px`;
+            }
+        }
+
+        function initializeTestIndicators() {
+            // Indicador responsive
+            const responsiveIndicator = document.getElementById('responsive-indicator');
+            
+            function updateResponsiveIndicator() {
+                const width = window.innerWidth;
+                let device = '';
+                
+                if (width < 576) {
+                    device = 'Mobile S';
+                } else if (width < 768) {
+                    device = 'Mobile';
+                } else if (width < 992) {
+                    device = 'Tablet';
+                } else if (width < 1200) {
+                    device = 'Desktop';
+                } else {
+                    device = 'Desktop L';
+                }
+                
+                responsiveIndicator.textContent = `${device} (${width}px)`;
+            }
+            
+            updateResponsiveIndicator();
+            window.addEventListener('resize', updateResponsiveIndicator);
+        }
+
+        // Prueba automática de funcionalidades
+        function runAutomaticTests() {
+            console.log('🧪 Iniciando pruebas automáticas del header...');
+            
+            // Test 1: Verificar que el header existe
+            const header = document.querySelector('.header');
+            console.log('✅ Header existe:', !!header);
+            
+            // Test 2: Verificar que el logo tiene el tamaño correcto
+            const logo = document.querySelector('.nav-logo .logo');
+            if (logo) {
+                const logoHeight = window.getComputedStyle(logo).height;
+                console.log('✅ Altura del logo:', logoHeight);
+            }
+            
+            // Test 3: Verificar que los enlaces de navegación existen
+            const navLinks = document.querySelectorAll('.nav-link');
+            console.log('✅ Enlaces de navegación encontrados:', navLinks.length);
+            
+            // Test 4: Verificar que el botón hamburguesa existe
+            const hamburger = document.querySelector('.nav-toggle');
+            console.log('✅ Botón hamburguesa existe:', !!hamburger);
+            
+            // Test 5: Verificar variables CSS
+            const computedStyle = getComputedStyle(document.documentElement);
+            const primaryColor = computedStyle.getPropertyValue('--color-primary').trim();
+            console.log('✅ Color primario cargado:', primaryColor);
+            
+            console.log('🎉 Pruebas automáticas completadas. Revisa la consola para más detalles.');
+        }
+
+        // Ejecutar pruebas automáticas después de 2 segundos
+        setTimeout(runAutomaticTests, 2000);
+    </script>
+</body>
+</html>

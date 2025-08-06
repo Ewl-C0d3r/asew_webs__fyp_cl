@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Integración Completa</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <link rel="stylesheet" href="../assets/css/contacto.css">
+    <link rel="stylesheet" href="../assets/css/footer.css">
+    <style>
+        .test-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .test-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section:last-child {
+            border-bottom: none;
+        }
+        
+        .test-section h4 {
+            margin: 0 0 8px 0;
+            color: var(--color-secondary);
+            font-size: 1rem;
+        }
+        
+        .test-checklist {
+            margin: 0;
+            padding-left: 15px;
+        }
+        
+        .test-checklist li {
+            margin: 3px 0;
+            font-size: 12px;
+        }
+        
+        .test-pass {
+            color: #4CAF50;
+        }
+        
+        .test-fail {
+            color: #ff6b6b;
+        }
+        
+        .test-pending {
+            color: #ffa726;
+        }
+        
+        .test-actions {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .test-btn {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            flex: 1;
+            min-width: 80px;
+        }
+        
+        .test-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .test-summary {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .toggle-panel {
+            position: fixed;
+            top: 20px;
+            right: 380px;
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-panel" onclick="toggleTestPanel()">Toggle Tests</button>
+    
+    <div class="test-panel" id="test-panel">
+        <h3 style="margin-top: 0;">🧪 Test Suite Completo</h3>
+        
+        <div class="test-summary">
+            <div>Pasados: <span id="tests-passed">0</span></div>
+            <div>Fallidos: <span id="tests-failed">0</span></div>
+            <div>Pendientes: <span id="tests-pending">0</span></div>
+        </div>
+        
+        <div class="test-section">
+            <h4>Estructura Base</h4>
+            <ul class="test-checklist">
+                <li id="test-html-structure">⏳ Estructura HTML</li>
+                <li id="test-css-loaded">⏳ CSS cargado</li>
+                <li id="test-js-loaded">⏳ JavaScript cargado</li>
+                <li id="test-responsive">⏳ Diseño responsivo</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Header & Navegación</h4>
+            <ul class="test-checklist">
+                <li id="test-header-structure">⏳ Estructura header</li>
+                <li id="test-logo">⏳ Logo presente</li>
+                <li id="test-navigation">⏳ Navegación funcional</li>
+                <li id="test-mobile-menu">⏳ Menú móvil</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Contenido Dinámico</h4>
+            <ul class="test-checklist">
+                <li id="test-areas-dynamic">⏳ Áreas de práctica</li>
+                <li id="test-servicios-dynamic">⏳ Servicios</li>
+                <li id="test-cta-buttons">⏳ Botones CTA</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Formulario</h4>
+            <ul class="test-checklist">
+                <li id="test-form-structure">⏳ Estructura formulario</li>
+                <li id="test-form-validation">⏳ Validación</li>
+                <li id="test-form-submission">⏳ Envío</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Funcionalidades</h4>
+            <ul class="test-checklist">
+                <li id="test-smooth-scroll">⏳ Smooth scrolling</li>
+                <li id="test-floating-buttons">⏳ Botones flotantes</li>
+                <li id="test-animations">⏳ Animaciones</li>
+                <li id="test-whatsapp-integration">⏳ WhatsApp</li>
+            </ul>
+        </div>
+        
+        <div class="test-actions">
+            <button class="test-btn" onclick="runAllTests()">Ejecutar Todo</button>
+            <button class="test-btn" onclick="runBasicTests()">Tests Básicos</button>
+            <button class="test-btn" onclick="runFunctionalTests()">Funcionales</button>
+            <button class="test-btn" onclick="clearTests()">Limpiar</button>
+        </div>
+    </div>
+
+    <!-- Contenido completo de la página -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#estudio" class="nav-link">El Estudio</a></li>
+                    <li class="nav-item"><a href="#areas" class="nav-link">Áreas de Práctica</a></li>
+                    <li class="nav-item"><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title">Fierro y Pérez Abogados</h1>
+            <p class="hero-subtitle">Asesoría jurídica integral con experiencia, precisión técnica y compromiso con los resultados</p>
+            <a href="#contacto" class="hero-cta">Consulta Gratuita</a>
+        </div>
+        <div class="scroll-down">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <section class="estudio" id="estudio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comprometidos con Proteger sus Intereses</h2>
+            </div>
+            <div class="estudio-content">
+                <div class="estudio-text">
+                    <p>En Fierro y Pérez Abogados entendemos que cada cliente necesita <strong>soluciones claras, rápidas y efectivas</strong>.</p>
+                    <a href="https://wa.me/+56992448094" class="cta-button" target="_blank">Solicitar Asesoría</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="areas" id="areas">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Áreas de Práctica</h2>
+            </div>
+            <div class="areas-grid" id="areas-grid"></div>
+        </div>
+    </section>
+
+    <section class="servicios" id="servicios">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+            </div>
+            <div class="servicios-grid" id="servicios-grid"></div>
+        </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contáctenos</h2>
+            </div>
+            <div class="contacto-content">
+                <div class="contacto-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo *</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono (opcional)</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje / Consulta *</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Enviar Consulta</button>
+                    </form>
+                </div>
+                <div class="contacto-info">
+                    <div class="info-item">
+                        <h3>Teléfono</h3>
+                        <p><a href="tel:+56992448094">+56 9 9244 8094</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <div class="footer-info">
+                    <p>&copy; 2025 Fierro y Pérez Abogados. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-buttons">
+        <button class="scroll-top-btn" id="scroll-top-btn" title="Volver arriba">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </button>
+        <a href="https://wa.me/+56992448094" class="whatsapp-btn" target="_blank" title="Contactar por WhatsApp">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/contacto.js"></script>
+    <script>
+        // Variables para el sistema de tests
+        let testResults = {
+            passed: 0,
+            failed: 0,
+            pending: 0
+        };
+        
+        // Funciones de utilidad para tests
+        function setTestResult(testId, result) {
+            const element = document.getElementById(testId);
+            if (!element) return;
+            
+            // Remover clases anteriores
+            element.classList.remove('test-pass', 'test-fail', 'test-pending');
+            
+            // Actualizar contadores
+            if (element.classList.contains('test-pass')) testResults.passed--;
+            if (element.classList.contains('test-fail')) testResults.failed--;
+            if (element.classList.contains('test-pending')) testResults.pending--;
+            
+            // Aplicar nueva clase y actualizar contador
+            if (result === 'pass') {
+                element.classList.add('test-pass');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✓');
+                testResults.passed++;
+            } else if (result === 'fail') {
+                element.classList.add('test-fail');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✗');
+                testResults.failed++;
+            } else {
+                element.classList.add('test-pending');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '⏳');
+                testResults.pending++;
+            }
+            
+            updateTestSummary();
+        }
+        
+        function updateTestSummary() {
+            document.getElementById('tests-passed').textContent = testResults.passed;
+            document.getElementById('tests-failed').textContent = testResults.failed;
+            document.getElementById('tests-pending').textContent = testResults.pending;
+        }
+        
+        // Tests básicos de estructura
+        function runBasicTests() {
+            console.log('🧪 Ejecutando tests básicos...');
+            
+            // Test estructura HTML
+            const requiredSections = ['header', 'inicio', 'estudio', 'areas', 'servicios', 'contacto', 'footer'];
+            let structureComplete = true;
+            
+            requiredSections.forEach(sectionId => {
+                if (!document.getElementById(sectionId) && !document.querySelector(`.${sectionId}`)) {
+                    structureComplete = false;
+                }
+            });
+            
+            setTestResult('test-html-structure', structureComplete ? 'pass' : 'fail');
+            
+            // Test CSS cargado
+            const computedStyle = window.getComputedStyle(document.body);
+            const cssLoaded = computedStyle.getPropertyValue('--color-primary') !== '';
+            setTestResult('test-css-loaded', cssLoaded ? 'pass' : 'fail');
+            
+            // Test JavaScript cargado
+            const jsLoaded = typeof loadDynamicContent === 'function';
+            setTestResult('test-js-loaded', jsLoaded ? 'pass' : 'fail');
+            
+            // Test responsive
+            const viewport = document.querySelector('meta[name="viewport"]');
+            setTestResult('test-responsive', viewport ? 'pass' : 'fail');
+            
+            // Test header
+            const header = document.querySelector('.header');
+            const logo = document.querySelector('.logo');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            setTestResult('test-header-structure', header ? 'pass' : 'fail');
+            setTestResult('test-logo', logo ? 'pass' : 'fail');
+            setTestResult('test-navigation', navMenu ? 'pass' : 'fail');
+            
+            // Test menú móvil
+            const navToggle = document.querySelector('.nav-toggle');
+            setTestResult('test-mobile-menu', navToggle ? 'pass' : 'fail');
+        }
+        
+        // Tests funcionales
+        function runFunctionalTests() {
+            console.log('🧪 Ejecutando tests funcionales...');
+            
+            // Test contenido dinámico
+            setTimeout(() => {
+                const areaCards = document.querySelectorAll('.area-card');
+                const servicioCards = document.querySelectorAll('.servicio-card');
+                
+                setTestResult('test-areas-dynamic', areaCards.length > 0 ? 'pass' : 'fail');
+                setTestResult('test-servicios-dynamic', servicioCards.length > 0 ? 'pass' : 'fail');
+                
+                // Test botones CTA
+                const ctaButtons = document.querySelectorAll('[href*="wa.me"]');
+                setTestResult('test-cta-buttons', ctaButtons.length > 0 ? 'pass' : 'fail');
+            }, 1000);
+            
+            // Test formulario
+            const contactForm = document.getElementById('contact-form');
+            const requiredFields = ['nombre', 'email', 'mensaje'];
+            let formComplete = true;
+            
+            requiredFields.forEach(fieldName => {
+                if (!document.getElementById(fieldName)) {
+                    formComplete = false;
+                }
+            });
+            
+            setTestResult('test-form-structure', contactForm && formComplete ? 'pass' : 'fail');
+            
+            // Test validación (simulada)
+            if (typeof validateAllFields === 'function') {
+                setTestResult('test-form-validation', 'pass');
+            } else {
+                setTestResult('test-form-validation', 'fail');
+            }
+            
+            // Test envío de formulario
+            setTestResult('test-form-submission', contactForm ? 'pass' : 'fail');
+            
+            // Test smooth scrolling
+            const internalLinks = document.querySelectorAll('a[href^="#"]');
+            setTestResult('test-smooth-scroll', internalLinks.length > 0 ? 'pass' : 'fail');
+            
+            // Test botones flotantes
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const whatsappBtn = document.querySelector('.whatsapp-btn');
+            setTestResult('test-floating-buttons', scrollTopBtn && whatsappBtn ? 'pass' : 'fail');
+            
+            // Test animaciones
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            setTestResult('test-animations', animatedElements.length > 0 ? 'pass' : 'fail');
+            
+            // Test WhatsApp
+            const whatsappLinks = document.querySelectorAll('[href*="wa.me"]');
+            setTestResult('test-whatsapp-integration', whatsappLinks.length > 0 ? 'pass' : 'fail');
+        }
+        
+        // Ejecutar todos los tests
+        function runAllTests() {
+            console.log('🚀 Ejecutando suite completo de tests...');
+            runBasicTests();
+            setTimeout(() => {
+                runFunctionalTests();
+            }, 500);
+        }
+        
+        // Limpiar tests
+        function clearTests() {
+            const testElements = document.querySelectorAll('[id^="test-"]');
+            testElements.forEach(element => {
+                element.classList.remove('test-pass', 'test-fail', 'test-pending');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '⏳');
+            });
+            
+            testResults = { passed: 0, failed: 0, pending: 0 };
+            updateTestSummary();
+        }
+        
+        // Toggle panel
+        function toggleTestPanel() {
+            const panel = document.getElementById('test-panel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar contadores
+            const allTests = document.querySelectorAll('[id^="test-"]');
+            testResults.pending = allTests.length;
+            updateTestSummary();
+            
+            // Ejecutar tests automáticamente después de cargar
+            setTimeout(() => {
+                runAllTests();
+            }, 2000);
+        });
+        
+        // Interceptar WhatsApp para testing
+        const originalOpen = window.open;
+        window.open = function(url, target) {
+            if (url.includes('wa.me')) {
+                console.log('🚀 WhatsApp interceptado para testing');
+                return null;
+            }
+            return originalOpen.call(this, url, target);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Servicios Simple</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <style>
+        .debug {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: red;
+            color: white;
+            padding: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug">
+        <div>Servicios cargados: <span id="count">0</span></div>
+        <button onclick="loadManual()">Cargar Manual</button>
+        <button onclick="checkVisibility()">Check Visibilidad</button>
+    </div>
+
+    <div style="padding: 20px;">
+        <h1>Test Simple de Servicios</h1>
+        
+        <!-- Servicios estáticos para probar CSS -->
+        <section class="servicios">
+            <div class="container">
+                <h2>Servicios Estáticos (CSS Test)</h2>
+                <div class="servicios-grid">
+                    <div class="servicio-card">
+                        <div class="servicio-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="servicio-title">Servicio Estático 1</h3>
+                        <p class="servicio-description">Este es un servicio estático para probar el CSS.</p>
+                        <ul class="servicio-detalles">
+                            <li>Detalle 1</li>
+                            <li>Detalle 2</li>
+                        </ul>
+                        <a href="#" class="servicio-cta">Solicitar Servicio</a>
+                    </div>
+                    
+                    <div class="servicio-card">
+                        <div class="servicio-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 3l1.09 3.26L16 6l-2.91.74L12 10l-1.09-3.26L8 6l2.91.74L12 3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="servicio-title">Servicio Estático 2</h3>
+                        <p class="servicio-description">Este es otro servicio estático para probar el CSS.</p>
+                        <ul class="servicio-detalles">
+                            <li>Detalle A</li>
+                            <li>Detalle B</li>
+                        </ul>
+                        <a href="#" class="servicio-cta">Solicitar Servicio</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Servicios dinámicos -->
+        <section class="servicios">
+            <div class="container">
+                <h2>Servicios Dinámicos (JavaScript Test)</h2>
+                <div class="servicios-grid" id="servicios-grid">
+                    <!-- Los servicios se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function updateCount() {
+            const cards = document.querySelectorAll('.servicio-card');
+            document.getElementById('count').textContent = cards.length;
+        }
+        
+        function loadManual() {
+            console.log('Cargando servicios manualmente...');
+            
+            const grid = document.getElementById('servicios-grid');
+            if (!grid) {
+                console.error('Grid no encontrado');
+                return;
+            }
+            
+            // Limpiar grid
+            grid.innerHTML = '';
+            
+            // Crear servicio manual
+            const servicioHTML = `
+                <div class="servicio-card" style="opacity: 1; visibility: visible;">
+                    <div class="servicio-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="servicio-title">Servicio Manual</h3>
+                    <p class="servicio-description">Este servicio fue creado manualmente para probar.</p>
+                    <ul class="servicio-detalles">
+                        <li>Detalle manual 1</li>
+                        <li>Detalle manual 2</li>
+                    </ul>
+                    <a href="#" class="servicio-cta">Solicitar Servicio</a>
+                </div>
+            `;
+            
+            grid.innerHTML = servicioHTML;
+            updateCount();
+            console.log('Servicio manual creado');
+        }
+        
+        function checkVisibility() {
+            const cards = document.querySelectorAll('.servicio-card');
+            console.log(`Total de tarjetas: ${cards.length}`);
+            
+            cards.forEach((card, index) => {
+                const style = window.getComputedStyle(card);
+                const rect = card.getBoundingClientRect();
+                
+                console.log(`Tarjeta ${index + 1}:`);
+                console.log(`  - opacity: ${style.opacity}`);
+                console.log(`  - visibility: ${style.visibility}`);
+                console.log(`  - display: ${style.display}`);
+                console.log(`  - width: ${rect.width}px`);
+                console.log(`  - height: ${rect.height}px`);
+                console.log(`  - top: ${rect.top}px`);
+                console.log(`  - background: ${style.backgroundColor}`);
+            });
+        }
+        
+        // Ejecutar al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado');
+            updateCount();
+            
+            // Intentar cargar servicios dinámicos
+            setTimeout(() => {
+                if (typeof loadServiciosContent === 'function') {
+                    console.log('Ejecutando loadServiciosContent...');
+                    loadServiciosContent();
+                    setTimeout(() => {
+                        updateCount();
+                        checkVisibility();
+                    }, 500);
+                } else {
+                    console.error('loadServiciosContent no está disponible');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

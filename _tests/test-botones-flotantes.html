@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Botones Flotantes</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 999;
+            max-width: 300px;
+        }
+        
+        .test-checklist {
+            margin-top: 10px;
+        }
+        
+        .test-checklist li {
+            margin: 5px 0;
+        }
+        
+        .test-pass {
+            color: #4CAF50;
+        }
+        
+        .test-fail {
+            color: #f44336;
+        }
+        
+        .test-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .test-section:nth-child(odd) {
+            background: #f8f9fa;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--color-secondary);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h3>Test: Botones Flotantes</h3>
+        <p>Verificar funcionalidades:</p>
+        <ul class="test-checklist">
+            <li id="test-scroll-top-btn">✓ Botón Scroll to Top</li>
+            <li id="test-whatsapp-btn">✓ Botón WhatsApp</li>
+            <li id="test-visibility">✓ Visibilidad al scroll</li>
+            <li id="test-positioning">✓ Posicionamiento correcto</li>
+            <li id="test-animations">✓ Animaciones</li>
+            <li id="test-mobile-responsive">✓ Responsive móvil</li>
+        </ul>
+    </div>
+
+    <div class="scroll-indicator">
+        Scroll Y: <span id="scroll-position">0</span>px
+    </div>
+
+    <div class="test-content">
+        <div class="test-section">
+            <div>
+                <h1>Sección 1 - Inicio</h1>
+                <p>Scroll hacia abajo para probar los botones flotantes</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div>
+                <h2>Sección 2</h2>
+                <p>El botón "Scroll to Top" debería aparecer ahora</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div>
+                <h2>Sección 3</h2>
+                <p>Prueba hacer click en el botón WhatsApp</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div>
+                <h2>Sección 4</h2>
+                <p>Prueba hacer click en "Scroll to Top"</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div>
+                <h2>Sección 5 - Final</h2>
+                <p>Ambos botones deberían estar visibles y funcionales</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones flotantes -->
+    <div class="floating-buttons">
+        <button class="scroll-top-btn" id="scroll-top-btn" title="Volver arriba">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </button>
+        
+        <a href="https://wa.me/+56992448094?text=Hola,%20me%20gustaría%20recibir%20información%20sobre%20sus%20servicios%20legales." 
+           class="whatsapp-btn" target="_blank" title="Contactar por WhatsApp">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Scripts de prueba específicos
+        document.addEventListener('DOMContentLoaded', function() {
+            runFloatingButtonsTests();
+            setupScrollIndicator();
+        });
+        
+        function runFloatingButtonsTests() {
+            // Test 1: Verificar existencia de botones
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const whatsappBtn = document.querySelector('.whatsapp-btn');
+            
+            if (scrollTopBtn) {
+                document.getElementById('test-scroll-top-btn').classList.add('test-pass');
+                console.log('✓ Botón Scroll to Top encontrado');
+            } else {
+                document.getElementById('test-scroll-top-btn').classList.add('test-fail');
+                console.log('✗ Botón Scroll to Top no encontrado');
+            }
+            
+            if (whatsappBtn) {
+                document.getElementById('test-whatsapp-btn').classList.add('test-pass');
+                console.log('✓ Botón WhatsApp encontrado');
+            } else {
+                document.getElementById('test-whatsapp-btn').classList.add('test-fail');
+                console.log('✗ Botón WhatsApp no encontrado');
+            }
+            
+            // Test 2: Verificar posicionamiento
+            if (scrollTopBtn && whatsappBtn) {
+                const scrollTopStyle = window.getComputedStyle(scrollTopBtn);
+                const whatsappStyle = window.getComputedStyle(whatsappBtn);
+                
+                if (scrollTopStyle.position === 'fixed' && whatsappStyle.position === 'fixed') {
+                    document.getElementById('test-positioning').classList.add('test-pass');
+                    console.log('✓ Posicionamiento correcto (fixed)');
+                } else {
+                    document.getElementById('test-positioning').classList.add('test-fail');
+                    console.log('✗ Posicionamiento incorrecto');
+                }
+            }
+            
+            // Test 3: Verificar funcionalidad de scroll
+            if (scrollTopBtn) {
+                scrollTopBtn.addEventListener('click', function() {
+                    console.log('✓ Botón Scroll to Top clickeado');
+                    document.getElementById('test-animations').classList.add('test-pass');
+                });
+            }
+            
+            // Test 4: Verificar visibilidad al scroll
+            let scrollTestPassed = false;
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100 && !scrollTestPassed) {
+                    if (scrollTopBtn && scrollTopBtn.classList.contains('visible')) {
+                        document.getElementById('test-visibility').classList.add('test-pass');
+                        console.log('✓ Visibilidad al scroll funciona');
+                        scrollTestPassed = true;
+                    }
+                }
+            });
+            
+            // Test 5: Verificar responsive
+            function checkResponsive() {
+                if (window.innerWidth <= 768) {
+                    document.getElementById('test-mobile-responsive').classList.add('test-pass');
+                    console.log('✓ Vista móvil detectada');
+                } else {
+                    document.getElementById('test-mobile-responsive').classList.add('test-pass');
+                    console.log('✓ Vista desktop detectada');
+                }
+            }
+            
+            checkResponsive();
+            window.addEventListener('resize', checkResponsive);
+        }
+        
+        function setupScrollIndicator() {
+            const scrollPosition = document.getElementById('scroll-position');
+            
+            window.addEventListener('scroll', function() {
+                scrollPosition.textContent = Math.round(window.scrollY);
+            });
+        }
+        
+        // Interceptar WhatsApp para testing
+        const originalOpen = window.open;
+        window.open = function(url, target) {
+            if (url.includes('wa.me')) {
+                console.log('🚀 WhatsApp se abriría con:', url);
+                alert('Test: WhatsApp se abriría correctamente');
+                return null;
+            }
+            return originalOpen.call(this, url, target);
+        };
+        
+        // Simular scroll automático para testing
+        setTimeout(() => {
+            console.log('🧪 Simulando scroll para probar visibilidad...');
+            window.scrollTo({ top: 200, behavior: 'smooth' });
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Hero Section</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .test-checklist {
+            margin-top: 10px;
+        }
+        
+        .test-checklist li {
+            margin: 5px 0;
+        }
+        
+        .test-pass {
+            color: #4CAF50;
+        }
+        
+        .test-fail {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h3>Test: Hero Section</h3>
+        <p>Verificar elementos y funcionalidades:</p>
+        <ul class="test-checklist">
+            <li id="test-hero-height">✓ Altura 100vh</li>
+            <li id="test-hero-content">✓ Contenido centrado</li>
+            <li id="test-hero-title">✓ Título principal</li>
+            <li id="test-hero-subtitle">✓ Subtítulo</li>
+            <li id="test-hero-cta">✓ Botón CTA</li>
+            <li id="test-scroll-arrow">✓ Flecha scroll down</li>
+            <li id="test-animations">✓ Animaciones</li>
+            <li id="test-responsive">✓ Diseño responsivo</li>
+        </ul>
+    </div>
+
+    <!-- Header simplificado para contexto -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#estudio" class="nav-link">El Estudio</a></li>
+                    <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section a probar -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1 class="hero-title">Fierro y Pérez Abogados</h1>
+            <p class="hero-subtitle">Asesoría jurídica integral con experiencia, precisión técnica y compromiso con los resultados</p>
+            <a href="#contacto" class="hero-cta">Consulta Gratuita</a>
+        </div>
+        
+        <!-- Flecha de scroll down -->
+        <div class="scroll-down">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Sección siguiente para probar scroll -->
+    <section id="estudio" style="height: 100vh; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+        <h2>Sección El Estudio (para probar scroll)</h2>
+    </section>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Script de prueba específico
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar altura del hero
+            const hero = document.querySelector('.hero');
+            const heroHeight = hero.offsetHeight;
+            const viewportHeight = window.innerHeight;
+            
+            if (Math.abs(heroHeight - viewportHeight) < 10) {
+                document.getElementById('test-hero-height').classList.add('test-pass');
+            } else {
+                document.getElementById('test-hero-height').classList.add('test-fail');
+            }
+            
+            // Verificar elementos
+            const elements = [
+                { id: 'test-hero-content', selector: '.hero-content' },
+                { id: 'test-hero-title', selector: '.hero-title' },
+                { id: 'test-hero-subtitle', selector: '.hero-subtitle' },
+                { id: 'test-hero-cta', selector: '.hero-cta' },
+                { id: 'test-scroll-arrow', selector: '.scroll-arrow' }
+            ];
+            
+            elements.forEach(element => {
+                const el = document.querySelector(element.selector);
+                const testEl = document.getElementById(element.id);
+                
+                if (el) {
+                    testEl.classList.add('test-pass');
+                } else {
+                    testEl.classList.add('test-fail');
+                }
+            });
+            
+            // Probar funcionalidad de scroll arrow
+            const scrollArrow = document.querySelector('.scroll-arrow');
+            if (scrollArrow) {
+                scrollArrow.addEventListener('click', function() {
+                    console.log('✓ Scroll arrow funciona correctamente');
+                });
+            }
+            
+            // Verificar responsividad
+            function checkResponsive() {
+                const heroContent = document.querySelector('.hero-content');
+                const computedStyle = window.getComputedStyle(heroContent);
+                
+                if (computedStyle.textAlign === 'center') {
+                    document.getElementById('test-responsive').classList.add('test-pass');
+                } else {
+                    document.getElementById('test-responsive').classList.add('test-fail');
+                }
+            }
+            
+            checkResponsive();
+            window.addEventListener('resize', checkResponsive);
+            
+            // Verificar animaciones después de un delay
+            setTimeout(() => {
+                const heroContent = document.querySelector('.hero-content');
+                if (heroContent.classList.contains('animate-fade-in-up')) {
+                    document.getElementById('test-animations').classList.add('test-pass');
+                } else {
+                    document.getElementById('test-animations').classList.add('test-fail');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+       

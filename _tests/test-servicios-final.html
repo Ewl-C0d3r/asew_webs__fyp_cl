@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Final - Servicios</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <style>
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            z-index: 1000;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status-info {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .status-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .status-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+        }
+        
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="status-info">
+            <div>Servicios: <span id="service-count">0</span></div>
+            <div>CSS: <span id="css-status">❌</span></div>
+            <div>JS: <span id="js-status">❌</span></div>
+        </div>
+        <div class="status-actions">
+            <button class="status-btn" onclick="forceReload()">Recargar</button>
+            <button class="status-btn" onclick="debugAll()">Debug</button>
+            <button class="status-btn" onclick="showStyles()">Estilos</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Test Final de Servicios</h1>
+        
+        <!-- Test 1: HTML Estático -->
+        <div class="test-section">
+            <h3>Test 1: Servicios HTML Estático (para probar CSS)</h3>
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="servicio-title">Servicio HTML Estático</h3>
+                    <p class="servicio-description">Este servicio está escrito directamente en HTML para probar si el CSS funciona.</p>
+                    <ul class="servicio-detalles">
+                        <li>Detalle estático 1</li>
+                        <li>Detalle estático 2</li>
+                    </ul>
+                    <a href="#" class="servicio-cta">Solicitar Servicio</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Test 2: JavaScript Dinámico -->
+        <div class="test-section">
+            <h3>Test 2: Servicios JavaScript Dinámico</h3>
+            <section class="servicios" id="servicios">
+                <div class="container">
+                    <div class="servicios-grid" id="servicios-grid">
+                        <!-- Los servicios se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Test 3: Manual -->
+        <div class="test-section">
+            <h3>Test 3: Creación Manual con JavaScript</h3>
+            <div class="servicios-grid" id="manual-grid">
+                <!-- Se llenará manualmente -->
+            </div>
+            <button onclick="createManualService()" style="margin-top: 10px; padding: 10px 20px;">Crear Servicio Manual</button>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        let debugMode = false;
+        
+        function updateStatus() {
+            // Contar servicios
+            const services = document.querySelectorAll('.servicio-card');
+            document.getElementById('service-count').textContent = services.length;
+            
+            // Verificar CSS
+            const testEl = document.createElement('div');
+            testEl.className = 'servicio-card';
+            testEl.style.position = 'absolute';
+            testEl.style.left = '-9999px';
+            document.body.appendChild(testEl);
+            
+            const styles = window.getComputedStyle(testEl);
+            const cssWorking = styles.backgroundColor !== 'rgba(0, 0, 0, 0)';
+            document.getElementById('css-status').textContent = cssWorking ? '✅' : '❌';
+            
+            document.body.removeChild(testEl);
+            
+            // Verificar JS
+            const jsWorking = typeof loadServiciosContent === 'function';
+            document.getElementById('js-status').textContent = jsWorking ? '✅' : '❌';
+        }
+        
+        function forceReload() {
+            console.log('🔄 Forzando recarga de servicios...');
+            
+            const grid = document.getElementById('servicios-grid');
+            if (grid) {
+                grid.innerHTML = '';
+                console.log('Grid limpiado');
+            }
+            
+            if (typeof loadServiciosContent === 'function') {
+                loadServiciosContent();
+                console.log('loadServiciosContent() ejecutado');
+                
+                setTimeout(() => {
+                    updateStatus();
+                    debugAll();
+                }, 500);
+            } else {
+                console.error('loadServiciosContent no disponible');
+            }
+        }
+        
+        function debugAll() {
+            console.log('🔍 DEBUG COMPLETO');
+            console.log('==================');
+            
+            // Variables CSS
+            const root = getComputedStyle(document.documentElement);
+            console.log('Variables CSS:');
+            console.log('  --color-primary:', root.getPropertyValue('--color-primary'));
+            console.log('  --color-secondary:', root.getPropertyValue('--color-secondary'));
+            console.log('  --color-secondary-rgb:', root.getPropertyValue('--color-secondary-rgb'));
+            console.log('  --color-text:', root.getPropertyValue('--color-text'));
+            
+            // Servicios
+            const services = document.querySelectorAll('.servicio-card');
+            console.log(`\\nServicios encontrados: ${services.length}`);
+            
+            services.forEach((service, index) => {
+                const styles = window.getComputedStyle(service);
+                const rect = service.getBoundingClientRect();
+                
+                console.log(`\\nServicio ${index + 1}:`);
+                console.log('  Visibilidad:');
+                console.log('    opacity:', styles.opacity);
+                console.log('    visibility:', styles.visibility);
+                console.log('    display:', styles.display);
+                console.log('  Posición:');
+                console.log('    width:', rect.width + 'px');
+                console.log('    height:', rect.height + 'px');
+                console.log('    top:', rect.top + 'px');
+                console.log('    left:', rect.left + 'px');
+                console.log('  Estilos:');
+                console.log('    background:', styles.backgroundColor);
+                console.log('    border:', styles.border);
+                console.log('    padding:', styles.padding);
+            });
+            
+            // Grid
+            const grid = document.getElementById('servicios-grid');
+            if (grid) {
+                const gridStyles = window.getComputedStyle(grid);
+                console.log('\\nGrid servicios-grid:');
+                console.log('  display:', gridStyles.display);
+                console.log('  grid-template-columns:', gridStyles.gridTemplateColumns);
+                console.log('  gap:', gridStyles.gap);
+                console.log('  opacity:', gridStyles.opacity);
+                console.log('  visibility:', gridStyles.visibility);
+            }
+        }
+        
+        function showStyles() {
+            const services = document.querySelectorAll('.servicio-card');
+            if (services.length === 0) {
+                alert('No hay servicios para mostrar estilos');
+                return;
+            }
+            
+            const service = services[0];
+            const styles = window.getComputedStyle(service);
+            
+            const styleInfo = `
+Estilos del primer servicio:
+- opacity: ${styles.opacity}
+- visibility: ${styles.visibility}
+- display: ${styles.display}
+- background: ${styles.backgroundColor}
+- width: ${styles.width}
+- height: ${styles.height}
+- padding: ${styles.padding}
+- margin: ${styles.margin}
+- border: ${styles.border}
+- position: ${styles.position}
+- z-index: ${styles.zIndex}
+            `;
+            
+            alert(styleInfo);
+        }
+        
+        function createManualService() {
+            const grid = document.getElementById('manual-grid');
+            
+            const serviceDiv = document.createElement('div');
+            serviceDiv.className = 'servicio-card';
+            serviceDiv.style.opacity = '1';
+            serviceDiv.style.visibility = 'visible';
+            serviceDiv.style.display = 'block';
+            
+            serviceDiv.innerHTML = `
+                <div class="servicio-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3l1.09 3.26L16 6l-2.91.74L12 10l-1.09-3.26L8 6l2.91.74L12 3z"/>
+                    </svg>
+                </div>
+                <h3 class="servicio-title">Servicio Manual ${Date.now()}</h3>
+                <p class="servicio-description">Este servicio fue creado manualmente con JavaScript puro.</p>
+                <ul class="servicio-detalles">
+                    <li>Creado con createElement</li>
+                    <li>Estilos forzados</li>
+                    <li>Timestamp: ${new Date().toLocaleTimeString()}</li>
+                </ul>
+                <a href="#" class="servicio-cta">Solicitar Servicio Manual</a>
+            `;
+            
+            grid.appendChild(serviceDiv);
+            updateStatus();
+            
+            console.log('Servicio manual creado:', serviceDiv);
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando test final de servicios...');
+            updateStatus();
+            
+            // Intentar cargar servicios automáticamente
+            setTimeout(() => {
+                forceReload();
+            }, 1000);
+            
+            // Actualizar status cada 2 segundos
+            setInterval(updateStatus, 2000);
+        });
+    </script>
+</body>
+</html>

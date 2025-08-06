@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Logo Animado</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <style>
+        .debug-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 2000;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .debug-info {
+            margin-bottom: 15px;
+        }
+        
+        .debug-info h4 {
+            margin: 0 0 8px 0;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        .debug-value {
+            font-family: monospace;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin: 2px 0;
+            display: block;
+        }
+        
+        .debug-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .debug-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .debug-btn:hover {
+            background: #b8941f;
+        }
+        
+        .test-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .test-section:nth-child(odd) {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        .test-section:nth-child(even) {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+            z-index: 1500;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <div class="debug-info">
+            <h4>Estado del Logo</h4>
+            <span class="debug-value" id="scroll-position">Scroll: 0px</span>
+            <span class="debug-value" id="logo-state">Estado: inicial</span>
+            <span class="debug-value" id="trigger-point">Trigger: 0px</span>
+            <span class="debug-value" id="end-point">End: 0px</span>
+        </div>
+        
+        <div class="debug-info">
+            <h4>Elementos</h4>
+            <span class="debug-value" id="hero-logo-status">Hero Logo: ❌</span>
+            <span class="debug-value" id="nav-logo-status">Nav Logo: ❌</span>
+        </div>
+        
+        <div class="debug-actions">
+            <button class="debug-btn" onclick="debugLogoAnimation()">Debug</button>
+            <button class="debug-btn" onclick="resetAnimatedLogo()">Reset</button>
+            <button class="debug-btn" onclick="scrollToSection(1)">Sección 1</button>
+            <button class="debug-btn" onclick="scrollToSection(3)">Sección 3</button>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">
+        Scroll para ver la animación del logo
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#test1" class="nav-link">Test 1</a></li>
+                    <li class="nav-item"><a href="#test2" class="nav-link">Test 2</a></li>
+                    <li class="nav-item"><a href="#test3" class="nav-link">Test 3</a></li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section con Logo Animado -->
+    <section class="hero" id="inicio">
+        <!-- Logo grande animado -->
+        <div class="hero-logo" id="hero-logo">
+            <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="hero-logo-img">
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Fierro y Pérez Abogados</h1>
+            <p class="hero-subtitle">Observa cómo el logo se anima al hacer scroll</p>
+            <a href="#test1" class="hero-cta">Ver Animación</a>
+        </div>
+        
+        <div class="scroll-down">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Secciones de prueba -->
+    <section class="test-section" id="test1">
+        <div>
+            <h2>Sección 1</h2>
+            <p>El logo debería estar en transición</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test2">
+        <div>
+            <h2>Sección 2</h2>
+            <p>El logo debería estar completando la transición</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test3">
+        <div>
+            <h2>Sección 3</h2>
+            <p>El logo debería estar en el navbar</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test4">
+        <div>
+            <h2>Sección 4</h2>
+            <p>El logo debería permanecer en el navbar</p>
+        </div>
+    </section>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Variables para el debug
+        let debugElements = {
+            scrollPosition: document.getElementById('scroll-position'),
+            logoState: document.getElementById('logo-state'),
+            triggerPoint: document.getElementById('trigger-point'),
+            endPoint: document.getElementById('end-point'),
+            heroLogoStatus: document.getElementById('hero-logo-status'),
+            navLogoStatus: document.getElementById('nav-logo-status')
+        };
+        
+        // Actualizar información de debug
+        function updateDebugInfo() {
+            const scrollY = window.scrollY;
+            const heroHeight = window.innerHeight;
+            const triggerPoint = heroHeight * 0.3;
+            const endPoint = heroHeight * 0.8;
+            
+            debugElements.scrollPosition.textContent = `Scroll: ${Math.round(scrollY)}px`;
+            debugElements.triggerPoint.textContent = `Trigger: ${Math.round(triggerPoint)}px`;
+            debugElements.endPoint.textContent = `End: ${Math.round(endPoint)}px`;
+            
+            // Determinar estado del logo
+            let state = 'inicial';
+            if (scrollY < triggerPoint) {
+                state = 'hero';
+            } else if (scrollY >= triggerPoint && scrollY < endPoint) {
+                state = 'transición';
+            } else {
+                state = 'navbar';
+            }
+            debugElements.logoState.textContent = `Estado: ${state}`;
+            
+            // Estado de elementos
+            const heroLogo = document.getElementById('hero-logo');
+            const navLogo = document.querySelector('.nav-logo');
+            
+            debugElements.heroLogoStatus.textContent = `Hero Logo: ${heroLogo ? '✅' : '❌'}`;
+            debugElements.navLogoStatus.textContent = `Nav Logo: ${navLogo ? '✅' : '❌'}`;
+        }
+        
+        // Función para scroll suave a secciones
+        function scrollToSection(sectionNumber) {
+            const section = document.getElementById(`test${sectionNumber}`);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Listeners
+        window.addEventListener('scroll', updateDebugInfo);
+        window.addEventListener('resize', updateDebugInfo);
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDebugInfo();
+            
+            // Actualizar debug info cada 100ms
+            setInterval(updateDebugInfo, 100);
+            
+            console.log('🎭 Test del logo animado iniciado');
+            console.log('Usa las funciones debugLogoAnimation() y resetAnimatedLogo() en la consola');
+        });
+        
+        // Función de prueba automática
+        function runAutoTest() {
+            console.log('🚀 Ejecutando prueba automática del logo...');
+            
+            const testSequence = [
+                { section: 'inicio', delay: 1000 },
+                { section: 'test1', delay: 2000 },
+                { section: 'test2', delay: 2000 },
+                { section: 'test3', delay: 2000 },
+                { section: 'inicio', delay: 2000 }
+            ];
+            
+            let currentTest = 0;
+            
+            function runNextTest() {
+                if (currentTest >= testSequence.length) {
+                    console.log('✅ Prueba automática completada');
+                    return;
+                }
+                
+                const test = testSequence[currentTest];
+                const element = document.getElementById(test.section);
+                
+                if (element) {
+                    console.log(`📍 Navegando a: ${test.section}`);
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                currentTest++;
+                setTimeout(runNextTest, test.delay);
+            }
+            
+            runNextTest();
+        }
+        
+        // Exponer función de prueba automática
+        window.runAutoTest = runAutoTest;
+        
+        console.log('💡 Tip: Ejecuta runAutoTest() para una prueba automática');
+    </script>
+</body>
+</html>

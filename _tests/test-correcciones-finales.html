@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Correcciones Finales</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <link rel="stylesheet" href="../assets/css/contacto.css">
+    <style>
+        .test-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .test-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .test-section h4 {
+            margin: 0 0 8px 0;
+            color: var(--color-secondary);
+            font-size: 1rem;
+        }
+        
+        .test-checklist {
+            margin: 0;
+            padding-left: 15px;
+        }
+        
+        .test-checklist li {
+            margin: 3px 0;
+            font-size: 12px;
+        }
+        
+        .test-pass {
+            color: #4CAF50;
+        }
+        
+        .test-fail {
+            color: #ff6b6b;
+        }
+        
+        .test-actions {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .test-btn {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            flex: 1;
+        }
+        
+        .content-wrapper {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-image {
+            width: 200px;
+            height: 150px;
+            background: #f0f0f0;
+            margin: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-panel">
+        <h3 style="margin-top: 0;">🔧 Test Correcciones Finales</h3>
+        
+        <div class="test-section">
+            <h4>Lazy Loading</h4>
+            <ul class="test-checklist">
+                <li id="test-lazy-function">⏳ Función implementada</li>
+                <li id="test-lazy-observer">⏳ Intersection Observer</li>
+                <li id="test-lazy-styles">⏳ Estilos CSS</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Google Maps</h4>
+            <ul class="test-checklist">
+                <li id="test-maps-link">⏳ Enlace a Google Maps</li>
+                <li id="test-maps-target">⏳ Abre en nueva pestaña</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Servicios Hover</h4>
+            <ul class="test-checklist">
+                <li id="test-servicios-hover">⏳ Hover funcional</li>
+                <li id="test-servicios-colors">⏳ Colores diferentes</li>
+                <li id="test-servicios-visibility">⏳ Visibilidad correcta</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h4>Contacto Desktop</h4>
+            <ul class="test-checklist">
+                <li id="test-contacto-visibility">⏳ Info visible desktop</li>
+                <li id="test-contacto-animations">⏳ Animaciones corregidas</li>
+            </ul>
+        </div>
+        
+        <div class="test-actions">
+            <button class="test-btn" onclick="runAllTests()">Ejecutar Tests</button>
+            <button class="test-btn" onclick="testLazyLoading()">Test Lazy</button>
+            <button class="test-btn" onclick="testHoverEffects()">Test Hover</button>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <h1>Test de Correcciones Finales</h1>
+        
+        <!-- Test Lazy Loading -->
+        <section style="margin: 40px 0;">
+            <h2>Test Lazy Loading de Imágenes</h2>
+            <div style="display: flex; flex-wrap: wrap;">
+                <img class="test-image" data-src="../assets/img/logo.jpg" alt="Test Lazy 1">
+                <img class="test-image" data-src="../assets/img/logo.jpg" alt="Test Lazy 2">
+                <img class="test-image" data-src="../assets/img/logo.jpg" alt="Test Lazy 3">
+            </div>
+        </section>
+        
+        <!-- Test Servicios -->
+        <section class="servicios" id="servicios">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Test Servicios - Hover Corregido</h2>
+                    <p class="section-subtitle">Pasa el mouse sobre las tarjetas para probar el hover</p>
+                </div>
+                <div class="servicios-grid" id="servicios-grid">
+                    <!-- Los servicios se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Contacto -->
+        <section class="contacto" id="contacto">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Test Contacto - Visibilidad Desktop</h2>
+                    <p class="section-subtitle">Verificar que la información de contacto sea visible en desktop</p>
+                </div>
+                
+                <div class="contacto-content">
+                    <div class="contacto-form">
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="nombre">Nombre completo *</label>
+                                <input type="text" id="nombre" name="nombre" required>
+                            </div>
+                            <button type="submit" class="submit-button">Enviar Consulta</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contacto-info">
+                        <div class="info-item">
+                            <h3>Dirección</h3>
+                            <p><a href="https://maps.google.com/?q=Antonio+Varas+979,+Temuco,+Región+de+la+Araucanía" target="_blank">Calle Antonio Varas 979, oficina 801<br>Temuco, Región de La Araucanía, Chile</a></p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h3>Teléfono</h3>
+                            <p><a href="tel:+56992448094">+56 9 9244 8094</a></p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h3>Correo Electrónico</h3>
+                            <p><a href="mailto:fierroyperezabogados@gmail.com">fierroyperezabogados@gmail.com</a></p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/+56992448094" target="_blank">Escríbanos ahora</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Funciones de test
+        function setTestResult(testId, result) {
+            const element = document.getElementById(testId);
+            if (!element) return;
+            
+            element.classList.remove('test-pass', 'test-fail');
+            
+            if (result === 'pass') {
+                element.classList.add('test-pass');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✓');
+            } else {
+                element.classList.add('test-fail');
+                element.innerHTML = element.innerHTML.replace(/^[⏳✗✓]/, '✗');
+            }
+        }
+        
+        function runAllTests() {
+            console.log('🧪 Ejecutando tests de correcciones finales...');
+            
+            // Test 1: Lazy Loading
+            testLazyLoading();
+            
+            // Test 2: Google Maps
+            testGoogleMaps();
+            
+            // Test 3: Servicios Hover
+            testHoverEffects();
+            
+            // Test 4: Contacto Desktop
+            testContactoVisibility();
+        }
+        
+        function testLazyLoading() {
+            console.log('🖼️ Probando Lazy Loading...');
+            
+            // Verificar función
+            const lazyFunctionExists = typeof initializeLazyLoading === 'function';
+            setTestResult('test-lazy-function', lazyFunctionExists ? 'pass' : 'fail');
+            
+            // Verificar Intersection Observer
+            const observerSupported = 'IntersectionObserver' in window;
+            setTestResult('test-lazy-observer', observerSupported ? 'pass' : 'fail');
+            
+            // Verificar estilos CSS
+            const testImg = document.querySelector('.test-image');
+            if (testImg) {
+                const computedStyle = window.getComputedStyle(testImg);
+                const hasLazyStyles = computedStyle.transition.includes('opacity');
+                setTestResult('test-lazy-styles', hasLazyStyles ? 'pass' : 'fail');
+            }
+            
+            console.log('✓ Lazy Loading tests completados');
+        }
+        
+        function testGoogleMaps() {
+            console.log('🗺️ Probando enlace a Google Maps...');
+            
+            // Verificar enlace
+            const mapsLink = document.querySelector('a[href*="maps.google.com"]');
+            setTestResult('test-maps-link', mapsLink ? 'pass' : 'fail');
+            
+            // Verificar target="_blank"
+            if (mapsLink) {
+                const hasTarget = mapsLink.getAttribute('target') === '_blank';
+                setTestResult('test-maps-target', hasTarget ? 'pass' : 'fail');
+            }
+            
+            console.log('✓ Google Maps tests completados');
+        }
+        
+        function testHoverEffects() {
+            console.log('🎨 Probando efectos hover en servicios...');
+            
+            setTimeout(() => {
+                const servicioCards = document.querySelectorAll('.servicio-card');
+                
+                if (servicioCards.length > 0) {
+                    setTestResult('test-servicios-hover', 'pass');
+                    
+                    // Verificar colores diferentes
+                    const servicioIcon = document.querySelector('.servicio-icon');
+                    if (servicioIcon) {
+                        const computedStyle = window.getComputedStyle(servicioIcon);
+                        const hasSecondaryColor = computedStyle.background.includes('212, 175, 55') || 
+                                                computedStyle.background.includes('d4af37');
+                        setTestResult('test-servicios-colors', hasSecondaryColor ? 'pass' : 'fail');
+                    }
+                    
+                    // Verificar visibilidad
+                    const firstCard = servicioCards[0];
+                    const cardStyle = window.getComputedStyle(firstCard);
+                    const isVisible = cardStyle.opacity !== '0' && cardStyle.visibility !== 'hidden';
+                    setTestResult('test-servicios-visibility', isVisible ? 'pass' : 'fail');
+                } else {
+                    setTestResult('test-servicios-hover', 'fail');
+                    setTestResult('test-servicios-colors', 'fail');
+                    setTestResult('test-servicios-visibility', 'fail');
+                }
+            }, 1000);
+            
+            console.log('✓ Hover effects tests completados');
+        }
+        
+        function testContactoVisibility() {
+            console.log('👁️ Probando visibilidad de contacto en desktop...');
+            
+            const contactoInfo = document.querySelector('.contacto-info');
+            if (contactoInfo) {
+                const computedStyle = window.getComputedStyle(contactoInfo);
+                const isVisible = computedStyle.opacity !== '0' && 
+                                computedStyle.visibility !== 'hidden' &&
+                                computedStyle.display !== 'none';
+                
+                setTestResult('test-contacto-visibility', isVisible ? 'pass' : 'fail');
+                
+                // Verificar animaciones
+                const hasAnimation = computedStyle.animation.includes('slideInRight');
+                setTestResult('test-contacto-animations', hasAnimation ? 'pass' : 'fail');
+            } else {
+                setTestResult('test-contacto-visibility', 'fail');
+                setTestResult('test-contacto-animations', 'fail');
+            }
+            
+            console.log('✓ Contacto visibility tests completados');
+        }
+        
+        // Ejecutar tests automáticamente
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                runAllTests();
+            }, 2000);
+        });
+        
+        // Interceptar WhatsApp y Google Maps para testing
+        const originalOpen = window.open;
+        window.open = function(url, target) {
+            if (url.includes('wa.me')) {
+                console.log('🚀 WhatsApp interceptado');
+                alert('Test: WhatsApp funcionando');
+                return null;
+            } else if (url.includes('maps.google.com')) {
+                console.log('🗺️ Google Maps interceptado');
+                alert('Test: Google Maps funcionando - ' + url);
+                return null;
+            }
+            return originalOpen.call(this, url, target);
+        };
+    </script>
+</body>
+</html>

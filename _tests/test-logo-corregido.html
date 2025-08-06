@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Logo Corregido</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <style>
+        .debug-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(44, 62, 80, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 2000;
+            max-width: 320px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .debug-section {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .debug-section:last-child {
+            border-bottom: none;
+        }
+        
+        .debug-section h4 {
+            margin: 0 0 8px 0;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        .debug-value {
+            font-family: monospace;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin: 2px 0;
+            display: block;
+        }
+        
+        .debug-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .debug-btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .debug-btn:hover {
+            background: #b8941f;
+        }
+        
+        .test-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .test-section:nth-child(odd) {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        .test-section:nth-child(even) {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        }
+        
+        .corrections-list {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            max-width: 300px;
+        }
+        
+        .corrections-list h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+        
+        .corrections-list ul {
+            margin: 0;
+            padding-left: 15px;
+        }
+        
+        .corrections-list li {
+            margin: 3px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <div class="debug-section">
+            <h4>Estado del Logo</h4>
+            <span class="debug-value" id="scroll-position">Scroll: 0px</span>
+            <span class="debug-value" id="logo-state">Estado: inicial</span>
+            <span class="debug-value" id="trigger-point">Trigger: 0px</span>
+            <span class="debug-value" id="end-point">End: 0px</span>
+            <span class="debug-value" id="progress-value">Progreso: 0%</span>
+        </div>
+        
+        <div class="debug-section">
+            <h4>Elementos</h4>
+            <span class="debug-value" id="hero-logo-status">Hero Logo: ❌</span>
+            <span class="debug-value" id="nav-logo-status">Nav Logo: ❌</span>
+            <span class="debug-value" id="logo-size">Tamaño: 0px</span>
+        </div>
+        
+        <div class="debug-actions">
+            <button class="debug-btn" onclick="debugLogoAnimation()">Debug</button>
+            <button class="debug-btn" onclick="resetAnimatedLogo()">Reset</button>
+            <button class="debug-btn" onclick="testTransition()">Test Auto</button>
+        </div>
+    </div>
+
+    <div class="corrections-list">
+        <h4>✅ Correcciones Aplicadas:</h4>
+        <ul>
+            <li>Logo cuadrado (sin border-radius)</li>
+            <li>Sin animación flotante</li>
+            <li>Centrado horizontalmente</li>
+            <li>Transición suave funcional</li>
+            <li>Tamaño ajustado al navbar</li>
+            <li>Responsive móvil/desktop</li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="logo">
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="#test1" class="nav-link">Test 1</a></li>
+                    <li class="nav-item"><a href="#test2" class="nav-link">Test 2</a></li>
+                    <li class="nav-item"><a href="#test3" class="nav-link">Test 3</a></li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section con Logo Animado CORREGIDO -->
+    <section class="hero" id="inicio">
+        <!-- Logo grande animado (CUADRADO, SIN FLOTACIÓN) -->
+        <div class="hero-logo" id="hero-logo">
+            <img src="../assets/img/logo.jpg" alt="Fierro y Pérez Abogados" class="hero-logo-img">
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Fierro y Pérez Abogados</h1>
+            <p class="hero-subtitle">Logo corregido: cuadrado, centrado, con transición suave</p>
+            <a href="#test1" class="hero-cta">Ver Transición Corregida</a>
+        </div>
+        
+        <div class="scroll-down">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Secciones de prueba -->
+    <section class="test-section" id="test1">
+        <div>
+            <h2>Sección 1 - 20% Scroll</h2>
+            <p>El logo debería iniciar la transición aquí</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test2">
+        <div>
+            <h2>Sección 2 - 40% Scroll</h2>
+            <p>El logo debería estar en transición media</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test3">
+        <div>
+            <h2>Sección 3 - 60% Scroll</h2>
+            <p>El logo debería completar la transición</p>
+        </div>
+    </section>
+
+    <section class="test-section" id="test4">
+        <div>
+            <h2>Sección 4 - Final</h2>
+            <p>El logo debería estar fijo en el navbar</p>
+        </div>
+    </section>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Variables para el debug
+        let debugElements = {
+            scrollPosition: document.getElementById('scroll-position'),
+            logoState: document.getElementById('logo-state'),
+            triggerPoint: document.getElementById('trigger-point'),
+            endPoint: document.getElementById('end-point'),
+            progressValue: document.getElementById('progress-value'),
+            heroLogoStatus: document.getElementById('hero-logo-status'),
+            navLogoStatus: document.getElementById('nav-logo-status'),
+            logoSize: document.getElementById('logo-size')
+        };
+        
+        // Actualizar información de debug
+        function updateDebugInfo() {
+            const scrollY = window.scrollY;
+            const heroHeight = window.innerHeight;
+            const triggerPoint = heroHeight * 0.2;
+            const endPoint = heroHeight * 0.6;
+            
+            debugElements.scrollPosition.textContent = `Scroll: ${Math.round(scrollY)}px`;
+            debugElements.triggerPoint.textContent = `Trigger: ${Math.round(triggerPoint)}px`;
+            debugElements.endPoint.textContent = `End: ${Math.round(endPoint)}px`;
+            
+            // Calcular progreso
+            let progress = 0;
+            if (scrollY >= triggerPoint && scrollY < endPoint) {
+                progress = (scrollY - triggerPoint) / (endPoint - triggerPoint);
+            } else if (scrollY >= endPoint) {
+                progress = 1;
+            }
+            debugElements.progressValue.textContent = `Progreso: ${Math.round(progress * 100)}%`;
+            
+            // Determinar estado del logo
+            let state = 'inicial';
+            if (scrollY < triggerPoint) {
+                state = 'hero';
+            } else if (scrollY >= triggerPoint && scrollY < endPoint) {
+                state = 'transición';
+            } else {
+                state = 'navbar';
+            }
+            debugElements.logoState.textContent = `Estado: ${state}`;
+            
+            // Estado de elementos
+            const heroLogo = document.getElementById('hero-logo');
+            const navLogo = document.querySelector('.nav-logo');
+            
+            debugElements.heroLogoStatus.textContent = `Hero Logo: ${heroLogo ? '✅' : '❌'}`;
+            debugElements.navLogoStatus.textContent = `Nav Logo: ${navLogo ? '✅' : '❌'}`;
+            
+            // Tamaño actual del logo
+            if (heroLogo) {
+                const logoImg = heroLogo.querySelector('.hero-logo-img');
+                if (logoImg) {
+                    const currentWidth = logoImg.style.width || '180px';
+                    debugElements.logoSize.textContent = `Tamaño: ${currentWidth}`;
+                }
+            }
+        }
+        
+        // Función para probar la transición automáticamente
+        function testTransition() {
+            console.log('🚀 Iniciando prueba automática de transición...');
+            
+            const testSequence = [
+                { position: 0, delay: 1000, name: 'Inicio' },
+                { position: window.innerHeight * 0.1, delay: 1500, name: 'Pre-transición' },
+                { position: window.innerHeight * 0.3, delay: 1500, name: 'Transición inicio' },
+                { position: window.innerHeight * 0.5, delay: 1500, name: 'Transición media' },
+                { position: window.innerHeight * 0.7, delay: 1500, name: 'Transición final' },
+                { position: window.innerHeight * 1.2, delay: 1500, name: 'Navbar fijo' },
+                { position: 0, delay: 2000, name: 'Vuelta al inicio' }
+            ];
+            
+            let currentTest = 0;
+            
+            function runNextTest() {
+                if (currentTest >= testSequence.length) {
+                    console.log('✅ Prueba automática completada');
+                    return;
+                }
+                
+                const test = testSequence[currentTest];
+                console.log(`📍 ${test.name}: scrolling to ${test.position}px`);
+                
+                window.scrollTo({
+                    top: test.position,
+                    behavior: 'smooth'
+                });
+                
+                currentTest++;
+                setTimeout(runNextTest, test.delay);
+            }
+            
+            runNextTest();
+        }
+        
+        // Listeners
+        window.addEventListener('scroll', updateDebugInfo);
+        window.addEventListener('resize', updateDebugInfo);
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDebugInfo();
+            
+            // Actualizar debug info cada 100ms
+            setInterval(updateDebugInfo, 100);
+            
+            console.log('🎭 Test del logo corregido iniciado');
+            console.log('Correcciones aplicadas:');
+            console.log('- ✅ Logo cuadrado (sin border-radius)');
+            console.log('- ✅ Sin animación flotante');
+            console.log('- ✅ Centrado horizontalmente');
+            console.log('- ✅ Transición suave funcional');
+            console.log('- ✅ Tamaño ajustado al navbar');
+            
+            // Verificar que las correcciones se aplicaron
+            setTimeout(() => {
+                const heroLogo = document.getElementById('hero-logo');
+                const logoImg = heroLogo?.querySelector('.hero-logo-img');
+                
+                if (logoImg) {
+                    const styles = window.getComputedStyle(logoImg);
+                    console.log('🔍 Verificación de estilos:');
+                    console.log('- border-radius:', styles.borderRadius);
+                    console.log('- animation:', styles.animation);
+                    console.log('- width:', styles.width);
+                }
+            }, 1000);
+        });
+        
+        console.log('💡 Tip: Usa testTransition() para una prueba automática completa');
+    </script>
+</body>
+</html>

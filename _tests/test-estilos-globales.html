@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Estilos Globales y Variables CSS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+        }
+        .test-title {
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 10px;
+        }
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .color-item {
+            padding: 15px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            color: white;
+            font-weight: 600;
+        }
+        .color-primary { background-color: var(--color-primary); }
+        .color-secondary { background-color: var(--color-secondary); color: var(--color-primary); }
+        .color-accent { background-color: var(--color-accent); }
+        .color-white { background-color: var(--color-white); color: var(--color-primary); border: 1px solid var(--color-medium-gray); }
+        .color-light-gray { background-color: var(--color-light-gray); color: var(--color-primary); }
+        .color-medium-gray { background-color: var(--color-medium-gray); }
+        .color-dark-gray { background-color: var(--color-dark-gray); }
+        
+        .typography-test {
+            margin: 20px 0;
+        }
+        
+        .button-test {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .grid-test {
+            background: var(--color-light-gray);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+        }
+        
+        .grid-test .row {
+            margin-bottom: 15px;
+        }
+        
+        .grid-test .col {
+            background: var(--color-white);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            border: 1px solid var(--color-medium-gray);
+        }
+        
+        .animation-test {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .animation-item {
+            width: 100px;
+            height: 100px;
+            background: var(--color-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .scrollbar-test {
+            height: 200px;
+            overflow-y: scroll;
+            background: var(--color-light-gray);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            margin: 20px 0;
+        }
+        
+        .responsive-test {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="test-container">
+            <h1 class="test-title">Test: Estilos Globales y Variables CSS</h1>
+            <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+            <p><strong>Objetivo:</strong> Verificar que las variables CSS, paleta de colores, tipografías y sistema responsivo funcionen correctamente.</p>
+        </div>
+
+        <div class="test-container">
+            <h2>Paleta de Colores</h2>
+            <div class="color-palette">
+                <div class="color-item color-primary">
+                    Primary<br>#2C3E50
+                </div>
+                <div class="color-item color-secondary">
+                    Secondary<br>#D4AF37
+                </div>
+                <div class="color-item color-accent">
+                    Accent<br>#34495E
+                </div>
+                <div class="color-item color-white">
+                    White<br>#FFFFFF
+                </div>
+                <div class="color-item color-light-gray">
+                    Light Gray<br>#F8F9FA
+                </div>
+                <div class="color-item color-medium-gray">
+                    Medium Gray<br>#6C757D
+                </div>
+                <div class="color-item color-dark-gray">
+                    Dark Gray<br>#495057
+                </div>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Tipografía</h2>
+            <div class="typography-test">
+                <h1>Título H1 - Fierro y Pérez Abogados</h1>
+                <h2>Título H2 - Asesoría Jurídica Integral</h2>
+                <h3>Título H3 - Derecho Corporativo</h3>
+                <h4>Título H4 - Servicios Especializados</h4>
+                <h5>Título H5 - Contacto</h5>
+                <h6>Título H6 - Información</h6>
+                <p>Párrafo normal: En Fierro y Pérez Abogados entendemos que cada cliente necesita <strong>soluciones claras, rápidas y efectivas</strong>. Nuestro trabajo se basa en tres pilares fundamentales.</p>
+                <p><a href="#">Enlace de ejemplo</a> - Este es un enlace con los colores de la paleta.</p>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Botones</h2>
+            <div class="button-test">
+                <button class="btn btn-primary">Botón Primario</button>
+                <button class="btn btn-secondary">Botón Secundario</button>
+                <a href="#" class="cta-button">Botón CTA</a>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Sistema de Grid Responsivo</h2>
+            <div class="grid-test">
+                <div class="row">
+                    <div class="col">Columna 1</div>
+                    <div class="col">Columna 2</div>
+                    <div class="col">Columna 3</div>
+                </div>
+                <div class="row">
+                    <div class="col">Columna A</div>
+                    <div class="col">Columna B</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Animaciones</h2>
+            <div class="animation-test">
+                <div class="animation-item animate-fade-in-up">Fade Up</div>
+                <div class="animation-item animate-fade-in-left">Fade Left</div>
+                <div class="animation-item animate-fade-in-right">Fade Right</div>
+                <div class="animation-item animate-pulse">Pulse</div>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Scrollbar Personalizada</h2>
+            <div class="scrollbar-test">
+                <p>Este contenedor tiene scroll personalizado. Desplázate para ver el scrollbar con los colores de la paleta.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt.</p>
+                <p>Explicabo nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Responsive Design Test</h2>
+            <div class="responsive-test">
+                <p>Redimensiona la ventana del navegador para probar el diseño responsivo.</p>
+                <p><strong>Breakpoints:</strong></p>
+                <ul style="text-align: left; max-width: 400px; margin: 0 auto;">
+                    <li>Mobile: < 768px</li>
+                    <li>Tablet: 768px - 992px</li>
+                    <li>Desktop: > 992px</li>
+                    <li>Large Desktop: > 1200px</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-container">
+            <h2>Variables CSS Verificadas</h2>
+            <div id="css-variables-test">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES');
+
+        // Verificar variables CSS
+        function testCSSVariables() {
+            const testContainer = document.getElementById('css-variables-test');
+            const computedStyle = getComputedStyle(document.documentElement);
+            
+            const variables = [
+                '--color-primary',
+                '--color-secondary',
+                '--color-accent',
+                '--font-primary',
+                '--spacing-md',
+                '--transition-normal',
+                '--shadow-md',
+                '--radius-md'
+            ];
+            
+            const results = variables.map(variable => {
+                const value = computedStyle.getPropertyValue(variable).trim();
+                return {
+                    variable,
+                    value,
+                    exists: value !== ''
+                };
+            });
+            
+            testContainer.innerHTML = `
+                <div style="display: grid; gap: 10px;">
+                    ${results.map(result => `
+                        <div style="display: flex; justify-content: space-between; padding: 8px; background: ${result.exists ? 'var(--color-light-gray)' : '#ffebee'}; border-radius: 4px;">
+                            <strong>${result.variable}:</strong>
+                            <span style="color: ${result.exists ? 'var(--color-primary)' : '#d32f2f'};">
+                                ${result.exists ? result.value : 'No definida'}
+                            </span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Ejecutar pruebas al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            testCSSVariables();
+            
+            // Añadir eventos a los elementos de animación
+            const animationItems = document.querySelectorAll('.animation-item');
+            animationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 10);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

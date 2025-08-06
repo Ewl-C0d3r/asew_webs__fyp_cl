@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Contenido Dinámico</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/servicios.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .test-checklist {
+            margin-top: 10px;
+        }
+        
+        .test-checklist li {
+            margin: 5px 0;
+        }
+        
+        .test-pass {
+            color: #4CAF50;
+        }
+        
+        .test-fail {
+            color: #f44336;
+        }
+        
+        .test-actions {
+            margin-top: 15px;
+        }
+        
+        .test-btn {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 12px;
+        }
+        
+        .test-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .debug-info {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            max-width: 250px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <h3>Test: Contenido Dinámico</h3>
+        <p>Verificar carga dinámica:</p>
+        <ul class="test-checklist">
+            <li id="test-areas-loaded">✓ Áreas de práctica cargadas</li>
+            <li id="test-areas-count">✓ Cantidad correcta de áreas</li>
+            <li id="test-areas-content">✓ Contenido de áreas completo</li>
+            <li id="test-servicios-loaded">✓ Servicios cargados</li>
+            <li id="test-servicios-count">✓ Cantidad correcta de servicios</li>
+            <li id="test-servicios-content">✓ Contenido de servicios completo</li>
+            <li id="test-cta-links">✓ Enlaces CTA funcionales</li>
+            <li id="test-animations">✓ Animaciones aplicadas</li>
+        </ul>
+        
+        <div class="test-actions">
+            <button class="test-btn" onclick="testAreasContent()">Test Áreas</button>
+            <button class="test-btn" onclick="testServiciosContent()">Test Servicios</button>
+            <button class="test-btn" onclick="testCTALinks()">Test CTAs</button>
+            <button class="test-btn" onclick="reloadContent()">Recargar</button>
+        </div>
+    </div>
+
+    <div class="debug-info" id="debug-info">
+        <strong>Debug Info:</strong><br>
+        <div id="debug-content">Iniciando tests...</div>
+    </div>
+
+    <div style="padding: 20px;">
+        <h1>Test de Contenido Dinámico</h1>
+        
+        <!-- Sección Áreas de Práctica -->
+        <section class="areas" id="areas">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Áreas de Práctica</h2>
+                    <p class="section-subtitle">Brindamos asesoría jurídica integral en materias clave para empresas y particulares</p>
+                </div>
+                <div class="areas-grid" id="areas-grid">
+                    <!-- Las áreas se cargarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section class="servicios" id="servicios">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Nuestros Servicios</h2>
+                    <p class="section-subtitle">Soluciones legales adaptadas a las necesidades específicas de cada cliente</p>
+                </div>
+                <div class="servicios-grid" id="servicios-grid">
+                    <!-- Los servicios se cargarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Variables para debugging
+        let debugInfo = document.getElementById('debug-content');
+        
+        function addDebugInfo(message) {
+            debugInfo.innerHTML += '<br>' + message;
+            debugInfo.scrollTop = debugInfo.scrollHeight;
+        }
+        
+        // Tests específicos
+        document.addEventListener('DOMContentLoaded', function() {
+            addDebugInfo('DOM cargado, iniciando tests...');
+            
+            // Esperar a que se cargue el contenido dinámico
+            setTimeout(() => {
+                runDynamicContentTests();
+            }, 1000);
+        });
+        
+        function runDynamicContentTests() {
+            addDebugInfo('Ejecutando tests de contenido dinámico...');
+            
+            // Test 1: Verificar que las áreas se cargaron
+            const areasGrid = document.getElementById('areas-grid');
+            const areaCards = areasGrid.querySelectorAll('.area-card');
+            
+            if (areaCards.length > 0) {
+                document.getElementById('test-areas-loaded').classList.add('test-pass');
+                addDebugInfo(`✓ ${areaCards.length} áreas cargadas`);
+            } else {
+                document.getElementById('test-areas-loaded').classList.add('test-fail');
+                addDebugInfo('✗ No se cargaron áreas');
+            }
+            
+            // Test 2: Verificar cantidad correcta de áreas (debería ser 4)
+            if (areaCards.length === 4) {
+                document.getElementById('test-areas-count').classList.add('test-pass');
+                addDebugInfo('✓ Cantidad correcta de áreas (4)');
+            } else {
+                document.getElementById('test-areas-count').classList.add('test-fail');
+                addDebugInfo(`✗ Cantidad incorrecta: ${areaCards.length} (esperado: 4)`);
+            }
+            
+            // Test 3: Verificar contenido de áreas
+            let areasContentComplete = true;
+            areaCards.forEach((card, index) => {
+                const title = card.querySelector('.area-title');
+                const description = card.querySelector('.area-description');
+                const services = card.querySelector('.area-services');
+                const cta = card.querySelector('.area-cta');
+                const icon = card.querySelector('.area-icon svg');
+                
+                if (!title || !description || !services || !cta || !icon) {
+                    areasContentComplete = false;
+                    addDebugInfo(`✗ Área ${index + 1} incompleta`);
+                }
+            });
+            
+            if (areasContentComplete) {
+                document.getElementById('test-areas-content').classList.add('test-pass');
+                addDebugInfo('✓ Contenido de áreas completo');
+            } else {
+                document.getElementById('test-areas-content').classList.add('test-fail');
+            }
+            
+            // Test 4: Verificar que los servicios se cargaron
+            const serviciosGrid = document.getElementById('servicios-grid');
+            const servicioCards = serviciosGrid.querySelectorAll('.servicio-card');
+            
+            if (servicioCards.length > 0) {
+                document.getElementById('test-servicios-loaded').classList.add('test-pass');
+                addDebugInfo(`✓ ${servicioCards.length} servicios cargados`);
+            } else {
+                document.getElementById('test-servicios-loaded').classList.add('test-fail');
+                addDebugInfo('✗ No se cargaron servicios');
+            }
+            
+            // Test 5: Verificar cantidad correcta de servicios (debería ser 4)
+            if (servicioCards.length === 4) {
+                document.getElementById('test-servicios-count').classList.add('test-pass');
+                addDebugInfo('✓ Cantidad correcta de servicios (4)');
+            } else {
+                document.getElementById('test-servicios-count').classList.add('test-fail');
+                addDebugInfo(`✗ Cantidad incorrecta: ${servicioCards.length} (esperado: 4)`);
+            }
+            
+            // Test 6: Verificar contenido de servicios
+            let serviciosContentComplete = true;
+            servicioCards.forEach((card, index) => {
+                const title = card.querySelector('.servicio-title');
+                const description = card.querySelector('.servicio-description');
+                const detalles = card.querySelector('.servicio-detalles');
+                const cta = card.querySelector('.servicio-cta');
+                const icon = card.querySelector('.servicio-icon svg');
+                
+                if (!title || !description || !detalles || !cta || !icon) {
+                    serviciosContentComplete = false;
+                    addDebugInfo(`✗ Servicio ${index + 1} incompleto`);
+                }
+            });
+            
+            if (serviciosContentComplete) {
+                document.getElementById('test-servicios-content').classList.add('test-pass');
+                addDebugInfo('✓ Contenido de servicios completo');
+            } else {
+                document.getElementById('test-servicios-content').classList.add('test-fail');
+            }
+            
+            // Test 7: Verificar animaciones
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            if (animatedElements.length > 0) {
+                document.getElementById('test-animations').classList.add('test-pass');
+                addDebugInfo(`✓ ${animatedElements.length} elementos con animación`);
+            } else {
+                document.getElementById('test-animations').classList.add('test-fail');
+                addDebugInfo('✗ No se encontraron elementos animados');
+            }
+        }
+        
+        function testAreasContent() {
+            addDebugInfo('🧪 Probando contenido de áreas...');
+            const areaCards = document.querySelectorAll('.area-card');
+            
+            areaCards.forEach((card, index) => {
+                const title = card.querySelector('.area-title').textContent;
+                const servicesCount = card.querySelectorAll('.area-services li').length;
+                addDebugInfo(`Área ${index + 1}: ${title} (${servicesCount} servicios)`);
+            });
+        }
+        
+        function testServiciosContent() {
+            addDebugInfo('🧪 Probando contenido de servicios...');
+            const servicioCards = document.querySelectorAll('.servicio-card');
+            
+            servicioCards.forEach((card, index) => {
+                const title = card.querySelector('.servicio-title').textContent;
+                const detallesCount = card.querySelectorAll('.servicio-detalles li').length;
+                addDebugInfo(`Servicio ${index + 1}: ${title} (${detallesCount} detalles)`);
+            });
+        }
+        
+        function testCTALinks() {
+            addDebugInfo('🧪 Probando enlaces CTA...');
+            
+            const areaCTAs = document.querySelectorAll('.area-cta');
+            const servicioCTAs = document.querySelectorAll('.servicio-cta');
+            
+            let validCTAs = 0;
+            
+            [...areaCTAs, ...servicioCTAs].forEach((cta, index) => {
+                const href = cta.getAttribute('href');
+                if (href && href.includes('wa.me')) {
+                    validCTAs++;
+                }
+            });
+            
+            if (validCTAs === areaCTAs.length + servicioCTAs.length) {
+                document.getElementById('test-cta-links').classList.add('test-pass');
+                addDebugInfo(`✓ ${validCTAs} enlaces CTA válidos`);
+            } else {
+                document.getElementById('test-cta-links').classList.add('test-fail');
+                addDebugInfo(`✗ Solo ${validCTAs} de ${areaCTAs.length + servicioCTAs.length} CTAs válidos`);
+            }
+        }
+        
+        function reloadContent() {
+            addDebugInfo('🔄 Recargando contenido dinámico...');
+            
+            // Limpiar grids
+            document.getElementById('areas-grid').innerHTML = '';
+            document.getElementById('servicios-grid').innerHTML = '';
+            
+            // Recargar contenido
+            if (typeof loadDynamicContent === 'function') {
+                loadDynamicContent();
+                setTimeout(() => {
+                    runDynamicContentTests();
+                }, 500);
+            } else {
+                addDebugInfo('✗ Función loadDynamicContent no encontrada');
+            }
+        }
+        
+        // Interceptar WhatsApp para testing
+        const originalOpen = window.open;
+        window.open = function(url, target) {
+            if (url.includes('wa.me')) {
+                addDebugInfo('🚀 WhatsApp interceptado: ' + url.substring(0, 50) + '...');
+                alert('Test: WhatsApp se abriría con mensaje personalizado');
+                return null;
+            }
+            return originalOpen.call(this, url, target);
+        };
+    </script>
+</body>
+</html>
